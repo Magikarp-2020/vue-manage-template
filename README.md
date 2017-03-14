@@ -2,6 +2,8 @@
 
 # vue-manage-template
 
+vue的后台管理模板,利用  [element-ui](http://element.eleme.io/#/zh-CN)  结合自己项目整理出来的,有很多不足希望大家多多包涵,欢迎issue/star
+
 ```
 npm install
 npm run dev
@@ -9,7 +11,7 @@ npm run build
 ```
 
 
-## 极速栈
+## 技术栈
 - MVVM框架： Vue 2.0
 - 源码：es6
 - 代码风格检查：eslint
