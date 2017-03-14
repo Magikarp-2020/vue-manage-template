@@ -1,10 +1,9 @@
 <template>
     <div v-loading.body="loading" class="main-box" :class="{'menu-hide': !menuStatus}">
         <header class="header">
-            <!--<crumbs ng-model="crumbs"></crumbs>-->
-            <breadcrumb></breadcrumb>
+            <img class="header-logo" src="~assets/logo.png" alt="">
             <div class="header-right-box">
-                <el-dropdown trigger="click" @command="headMenuChange" style="float: left;">
+                <el-dropdown trigger="click" @command="headMenuChange" class="fll">
                     <a class="header-right-item header-head clearfix" href="javascript:;">
                         <img class="header-head-img userface-hook" src="~assets/test.png">
                         <div class="caret-box"><span class="caret"></span></div>
@@ -32,7 +31,12 @@
         </aside>
 
         <div class="common-content">
-            <router-view></router-view>
+            <div class="breadcrumb">
+                <breadcrumb></breadcrumb>
+            </div>
+            <div id="contentMain">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>

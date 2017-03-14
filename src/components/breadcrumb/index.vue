@@ -1,7 +1,10 @@
 <template>
     <div class="header-crumbs">
-        <span v-for="(c,index) in crumbs" :class="{active: index==crumbs.length-1}">{{c}}<span
-                v-if="crumbs.length > 1 && index!=crumbs.length-1 && crumbs[0].length">/</span></span>
+        <!--<span v-for="(c,index) in crumbs" :class="{active: index==crumbs.length-1}">{{c}}<span
+                v-if="crumbs.length > 1 && index!=crumbs.length-1 && crumbs[0].length">/</span></span>-->
+        <el-breadcrumb separator="/">
+            <el-breadcrumb-item v-for="(c,index) in crumbs">{{c}}</el-breadcrumb-item>
+        </el-breadcrumb>
     </div>
 </template>
 
