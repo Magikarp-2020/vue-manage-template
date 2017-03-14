@@ -8,9 +8,61 @@ npm run dev
 npm run build
 ```
 
+
+## 极速栈
+- MVVM框架： Vue 2.0
+- 源码：es6
+- 代码风格检查：eslint
+- 构建工具：webpack
+- 前端路由：vue-router
+- 状态管理：vuex
+- 服务端通讯：vue-resource
+
+
+## 目录划分
+
+```
+│  index.html
+│  package.json
+│  README.md
+├─build -- webpack
+├─config -- webpack 配置
+├─dist  -- 打包后生成的文件
+├─src
+│  │  main.js -- 项目入口
+│  ├─assets -- 资源
+│  ├─components -- 组件
+│  ├─config -- 配置
+│  ├─filter -- vue 过滤器
+│  ├─router -- 路由配置
+│  ├─services -- 服务端通讯
+│  │  └─xhr
+│  │          xhr.js
+│  ├─stores -- vuex
+│  ├─util -- util
+│  ├─validate
+│  └─views
+│      │  App.vue -- 根文件
+│      │  index.vue -- 主页
+│      │  login.vue -- 登录
+│      │  main.vue -- 公共部分  (带有header/aside的框子)
+│      │  router-bridge.vue -- 用于 vue-router 过度
+│      ├─base
+│      │      404.vue
+│      └─demo
+└─static
+    ├─css
+    ├─font
+    ├─images
+    └─js
+```
+
+## 小技巧
+
+
 ### 方便后端的同学修改接口地址
 
-在项目使用中，经常有后端的同学需要修改api请求接口，为避免每次都需要前端人员去修改，在 `index.html` 中增加全局API访问域名的配置
+在项目使用中，经常有后端的同学需要**修改api请求域名**，为避免每次都需要前端人员去修改，在 `index.html` 中增加全局API访问域名的配置
 
 > index.html:16
 
@@ -42,7 +94,7 @@ export const getRoot = () => {
 
 ### 因为外网网速原因增加 loading 窗口
 
-项目中使用了 `require` 来懒加载页面，所以在外网环境中因为网速原因在页面加载时会给用户假死错觉。
+项目中使用了 `require` 来懒加载页面，所以在外网环境中因为网速原因在页面加载时会给用户**假死**错觉。
 
 > src/router/index.js:12
 
@@ -107,3 +159,7 @@ router.afterEach(route => {
 productionSourceMap: false
 ```
 
+## 下版改进
+
+- [ ] 菜单级别 + 1
+- [ ] 样式美化
