@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>团队工作台</title>
+</head>
+<body>
+<style>
+    div, html, body {
+        padding: 0;
+        margin: 0;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    .router-loading {
+        background: #00a8ff;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .router-loading > .loading-img {
+        width: 600px;
+        height: 450px;
+        position: absolute;
+        left: 50%;
+        margin-left: -300px;
+        top: 50%;
+        margin-top: -225px;
+    }
+</style>
+<div id="app" class="router-loading" style="">
+    <img class="loading-img" src="static/image/loading.gif" alt="">
+</div>
+<!-- built files will be auto injected -->
+</body>
+<script>window.CHANGE_ROOT = '';</script>
+</html>
