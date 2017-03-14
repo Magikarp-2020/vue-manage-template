@@ -96,3 +96,14 @@ router.afterEach(route => {
     </el-menu-item>
 </el-menu>
 ```
+
+### 减少打包后文件大小
+
+> config/index.js:11
+
+在 vue-cli 生成的项目中,打包后的文件夹大小往往大的不契合常理,在日常开发中发现是webpack生成了`*.map.js`文件,会有很大的体积,后关闭
+
+```
+productionSourceMap: false
+```
+
