@@ -983,3 +983,29 @@ button, input, select, textarea {
     visibility: hidden;
   }
 }
+
+.w100p {
+  width: 100%;
+}
+
+.help-block {
+  display: block;
+  margin-top: 10px;
+  color: #999;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}

@@ -12,7 +12,15 @@ npm run build
 ```
 
 
+
+```
+open://localhost:8085/
+```
+
+
+
 ## 技术栈
+
 - MVVM框架:  **Vue 2.0**
 - ui框架:   **element-ui**
 - 源码:  es6

@@ -92,7 +92,7 @@ header.header {
 }
 
 aside.aside {
-  background: rgb(49, 55, 62);
+  background: #324157;
   height: 100%;
   width: $aside-width;
   z-index: 30;
@@ -101,68 +101,11 @@ aside.aside {
   padding-top: $header-height;
   .menu-box {
     overflow: auto;
-    top: 70px;
+    top: $header-height;
     left: 0;
     right: 0;
     bottom: 0px;
     position: absolute;
-  }
-
-  a:hover {
-    color: #c9c9c9;
-  }
-  a:focus {
-  }
-  a.active {
-    color: #ffffff;
-  }
-  .alone-href {
-    display: block;
-    position: relative;
-    padding: 10px 0 10px 40px;
-    i {
-      position: absolute;
-      left: 15px;
-      top: 13px;
-    }
-    &.active {
-      background: #f60;
-    }
-  }
-
-  .menu-self {
-    color: #ffffff;
-    background: #31373e;
-    &, .el-submenu__title:hover, .el-menu-item {
-      background: #31373e;
-    }
-    .el-submenu__title {
-      color: #999;
-    }
-    .el-menu-item {
-      a {
-        //display: block;
-        //width: 100%;
-        //height: 100%;
-      }
-      color: #a6b6c8;
-      &:hover {
-        color: #c9c9c9;
-        a {
-          color: #c9c9c9;
-        }
-      }
-      &.is-active {
-        background: rgba(241, 88, 34, 1);
-        color: #ffffff;
-        a {
-          color: #ffffff;
-        }
-      }
-    }
-    .el-menu-item i, .el-submenu__title i {
-      color: #b5b5b5;
-    }
   }
   .label {
     margin-top: 5px;
@@ -181,6 +124,7 @@ aside.aside {
     background: #ffffff;
     padding-left: 8px;
     color: #1F2D3D;
+    border-bottom:2px solid #d8d8d8;
     span {
       line-height: $breadcrumb-height;
     }
@@ -190,68 +134,8 @@ aside.aside {
   }
 }
 
-// btn
-.el-button.btn-short {
-  padding: 8px 15px;
-}
-
-.el-button.btn-md {
-  min-width: 80px;
-  padding: 8px 15px;
-}
-
-.fr {
-  float: right;
-}
-
-.fl {
-  float: left;
-}
-
 .common-content .el-tabs--border-card .el-tabs__content {
   padding: 20px;
-}
-
-.thumbnail-main {
-  .el-checkbox__inner {
-    width: 16px !important;
-    height: 16px !important;
-    vertical-align: middle;
-    top: 0px;
-  }
-  .el-checkbox__inner::after {
-    height: 7px !important;
-    left: 4px !important;
-  }
-  .el-checkbox__label {
-    vertical-align: middle;
-  }
-}
-
-.operate {
-  .el-upload__tip {
-    font-size: 13px;
-    margin-top: 12px;
-    line-height: 1.5;
-  }
-}
-
-.w100p {
-  width: 100%;
-}
-
-.help-block {
-  display: block;
-  margin-top: 10px;
-  color: #999;
-  font-size: 13px;
-  line-height: 1;
-}
-
-.ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .main-box {
