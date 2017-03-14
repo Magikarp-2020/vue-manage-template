@@ -1,3 +1,5 @@
+[TOC]
+
 # vue-manage-template
 
 ```
@@ -12,7 +14,7 @@ npm run build
 
 > index.html:16
 
-```javascript
+```html
 <!-- 修改可改变访问域名 -->
 <script>window.CHANGE_ROOT = '';</script>
 ```
@@ -80,7 +82,7 @@ router.afterEach(route => {
 
 > menu
 
-```
+```html
 <el-menu :default-active="getRouterLink" class="menu-self" :router="true">
     <el-submenu v-for="(map,index) in routerMap" v-if="map.children && !map.hide && map.jurisdiction" :index="index+''">
         <template slot="title"><i :class="map.icon"></i>{{map.text}}</template>
