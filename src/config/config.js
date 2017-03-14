@@ -4,6 +4,9 @@
 import router from 'router/index';
 import {Message, MessageBox} from 'element-ui';
 
+/**
+ * 检测断网
+ */
 let EventUtil = {
     addHandler: (element, type, handler) => {
         if (element.addEventListener) {
@@ -24,14 +27,20 @@ EventUtil.addHandler(window, 'offline', () => {
     });
 });
 
+/**
+ * 根据配置获取域名
+ * localhost/127.0.0.1 通过cors访问接口
+ * @return {string}
+ */
 export const getRoot = () => {
     let ROOT = '';
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        ROOT = 'http://dev.mosu.local';
+    if (window.CHANGE_ROOT) {
+        ROOT = window.CHANGE_ROOT;
+    } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        ROOT = '//dev.demo.local';
     } else {
         ROOT = '';
     }
-    // ROOT = 'http://mosu.odata.me';
     return ROOT;
 };
 
@@ -39,11 +48,7 @@ export const rootPath = (conf = {}) => {
     let ROOT = conf.root || getRoot();  // mosu.odata.me    dev.mosu.local
     const CONTEXT_NAME = conf.context_name || 'teamwork';
 
-    if (window.CHANGE_ROOT) {
-        return window.CHANGE_ROOT + '/' + CONTEXT_NAME;
-    } else {
-        return ROOT + '/' + CONTEXT_NAME;
-    }
+    return ROOT + '/' + CONTEXT_NAME;
 };
 
 export const successHandler = (res) => {

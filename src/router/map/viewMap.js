@@ -6,7 +6,7 @@ export default [{
     key: 'myHome',
     text: '首页',
     jurisdiction: true,
-    icon: 'el-icon-notice',
+    icon: 'el-icon-setting',
     component: resolve => {
         require(['views/index'], resolve);
     }
@@ -15,7 +15,7 @@ export default [{
     key: 'myHome',
     text: '菜单1',
     jurisdiction: true,
-    icon: 'el-icon-notice',
+    icon: 'el-icon-setting',
     component: resolve => {
         require(['views/demo/view1'], resolve);
     }
@@ -24,7 +24,7 @@ export default [{
     key: 'myHome',
     text: '父菜单',
     jurisdiction: true,
-    icon: 'el-icon-notice',
+    icon: 'el-icon-setting',
     component: resolve => {
         require(['views/router-bridge'], resolve);
     },
@@ -34,7 +34,7 @@ export default [{
             key: 'myHome',
             text: '大儿子',
             jurisdiction: true,
-            icon: 'el-icon-notice',
+            icon: 'el-icon-setting',
             component: resolve => {
                 require(['views/demo/child1'], resolve);
             }
@@ -43,7 +43,7 @@ export default [{
             key: 'myHome',
             text: '二儿子',
             jurisdiction: true,
-            icon: 'el-icon-notice',
+            icon: 'el-icon-setting',
             component: resolve => {
                 require(['views/demo/child2'], resolve);
             }
