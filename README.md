@@ -15,7 +15,7 @@ npm run build
 
 
 ```
-open://localhost:8085/
+open://localhost:8087/
 ```
 
 
@@ -334,6 +334,14 @@ router.afterEach(route => {
 productionSourceMap: false
 ```
 
+
+
+### font图标
+
+使用iconfont.cn 的图片，需要使用的可以进入 `static/font/demo_fontclass.html` 查看className 使用，本项目内置的图标是从 http://www.iconfont.cn/plus/collections/detail?cid=44 图标库中选中的，需要其他的图标可自行添加
+
+
+
 ## 下版改进
 
 - [ ] 菜单级别 + 1
@@ -346,6 +354,8 @@ productionSourceMap: false
 #### 2017年3月15日
 
 1. - [ ] 更改布局方式，目前为 header/aside 通过定位定位上的，可以更改为通过 flex 实现
+
+   >  不方便设置高度，暂不处理
 
 2. - [ ] 添加消息模块样式
 

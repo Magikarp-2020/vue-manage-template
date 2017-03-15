@@ -3,11 +3,9 @@
         <header class="header">
             <v-header logo="static/images/logo.png"></v-header>
         </header>
-
-        <aside class="aside">
+        <aside class="aside clearfix">
             <v-aside></v-aside>
         </aside>
-
         <div class="common-content">
             <div class="breadcrumb">
                 <breadcrumb></breadcrumb>

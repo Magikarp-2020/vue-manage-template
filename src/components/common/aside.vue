@@ -10,7 +10,7 @@
 
         <div class="menu-animate" @click="changeMenuStatus">
             <i class="iconfont"
-               :class="{'icon-cbr': menuStatus, 'icon-zhankaicelalan': !menuStatus}"></i>
+               :class="{'icon-chevronleft': menuStatus, 'icon-chevronright': !menuStatus}"></i>
         </div>
     </div>
 </template>

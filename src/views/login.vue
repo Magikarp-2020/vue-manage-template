@@ -1,29 +1,40 @@
 <template>
-    <div>
-        <div class="login-form">
-            <h1>LOGO</h1>
-            <div class="form-group ">
-                <input type="text" class="form-control" placeholder="用户名" id="UserName">
-                <i class="fa fa-user"></i>
+    <div class="wh100p login-box">
+        <div class="login-page">
+            <div class="form">
+                <form class="register-form">
+                    <input type="text" placeholder="name"/>
+                    <input type="password" placeholder="password"/>
+                    <input type="text" placeholder="email address"/>
+                    <button>create</button>
+                    <p class="message">Already registered? <a href="#">Sign In</a></p>
+                </form>
+                <form class="login-form">
+                    <input type="text" placeholder="用户名"/>
+                    <input type="password" placeholder="密码"/>
+                    <button @click="login">登录</button>
+                    <p class="message">没有账号? <a href="#">注册账号</a></p>
+                </form>
             </div>
-            <div class="form-group log-status">
-                <input type="password" class="form-control" placeholder="密码" id="Passwod">
-                <i class="fa fa-lock"></i>
-            </div>
-            <a class="link" href="#">忘记密码?</a>
-            <button type="button" class="log-btn" @click="login">登  录</button>
         </div>
     </div>
 </template>
 
 <script>
+    import $ from 'assets/jquery-vendor';
+
     export default {
         data() {
             return {};
         },
+        created() {
+            $('body').on('click', '.login-page .message a', function () {
+                $('form').animate({height: 'toggle', opacity: 'toggle'}, 'slow');
+            });
+        },
         methods: {
             login() {
-                this.$router.push('/main/');
+                this.$router.replace('/main/');
             }
         }
     };
@@ -31,143 +42,123 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-    * {
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        font-family: arial;
+    .login-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f2f2f2;
     }
 
-    h1 {
-        color: #ccc;
-        text-align: center;
-        font-family: 'Vibur', cursive;
-        font-size: 50px;
+    .login-page {
+        width: 360px;
+
     }
 
-    .login-form {
-        width: 350px;
-        padding: 40px 30px;
-        background: #eee;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-        margin: auto;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 50%;
-        -moz-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-
-    .form-group {
+    .form {
         position: relative;
-        margin-bottom: 15px;
+        z-index: 1;
+        background: #FFFFFF;
+        max-width: 360px;
+        /*margin: 0 auto 100px;*/
+        padding: 45px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     }
 
-    .form-control {
+    .form input {
+        /*font-family: "Roboto", sans-serif;*/
+        outline: 0;
+        background: #f2f2f2;
         width: 100%;
-        height: 50px;
-        border: none;
-        padding: 5px 7px 5px 15px;
-        background: #fff;
-        color: #666;
-        border: 2px solid #ddd;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-    }
-    .form-control:focus, .form-control:focus + .fa {
-        border-color: #10CE88;
-        color: #10CE88;
+        border: 0;
+        margin: 0 0 15px;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 14px;
     }
 
-    .form-group .fa {
-        position: absolute;
-        right: 15px;
-        top: 17px;
-        color: #999;
-    }
-
-    .log-status.wrong-entry {
-        -moz-animation: wrong-log 0.3s;
-        -webkit-animation: wrong-log 0.3s;
-        animation: wrong-log 0.3s;
-    }
-
-    .log-status.wrong-entry .form-control, .wrong-entry .form-control + .fa {
-        border-color: #ed1c24;
-        color: #ed1c24;
-    }
-
-    .log-btn {
-        background: #0AC986;
-        display: inline-block;
+    .form button {
+        /*font-family: "Roboto", sans-serif;*/
+        text-transform: uppercase;
+        outline: 0;
+        background: #4CAF50;
         width: 100%;
-        font-size: 16px;
-        height: 50px;
-        color: #fff;
-        text-decoration: none;
-        border: none;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
+        border: 0;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        cursor: pointer;
     }
 
-    .link {
-        text-decoration: none;
-        color: #C6C6C6;
-        float: right;
+    .form button:hover, .form button:active, .form button:focus {
+        background: #43A047;
+    }
+
+    .form .message {
+        margin: 15px 0 0;
+        color: #b3b3b3;
         font-size: 12px;
-        margin-bottom: 15px;
-    }
-    .link:hover {
-        text-decoration: underline;
-        color: #8C918F;
     }
 
-    .alert {
+    .form .message a {
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+    .form .register-form {
         display: none;
-        font-size: 12px;
-        color: #f00;
-        float: left;
     }
 
-    @-moz-keyframes wrong-log {
-        0%, 100% {
-            left: 0px;
-        }
-        20% , 60% {
-            left: 15px;
-        }
-        40% , 80% {
-            left: -15px;
-        }
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 300px;
+        margin: 0 auto;
     }
-    @-webkit-keyframes wrong-log {
-        0%, 100% {
-            left: 0px;
-        }
-        20% , 60% {
-            left: 15px;
-        }
-        40% , 80% {
-            left: -15px;
-        }
+
+    .container:before, .container:after {
+        content: "";
+        display: block;
+        clear: both;
     }
-    @keyframes wrong-log {
-        0%, 100% {
-            left: 0px;
-        }
-        20% , 60% {
-            left: 15px;
-        }
-        40% , 80% {
-            left: -15px;
-        }
+
+    .container .info {
+        margin: 50px auto;
+        text-align: center;
+    }
+
+    .container .info h1 {
+        margin: 0 0 15px;
+        padding: 0;
+        font-size: 36px;
+        font-weight: 300;
+        color: #1a1a1a;
+    }
+
+    .container .info span {
+        color: #4d4d4d;
+        font-size: 12px;
+    }
+
+    .container .info span a {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .container .info span .fa {
+        color: #EF3B3A;
+    }
+
+    body {
+        background: #76b852; /* fallback for old browsers */
+        background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+        background: -moz-linear-gradient(right, #76b852, #8DC26F);
+        background: -o-linear-gradient(right, #76b852, #8DC26F);
+        background: linear-gradient(to left, #76b852, #8DC26F);
+        /*font-family: "Roboto", sans-serif;*/
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
 
