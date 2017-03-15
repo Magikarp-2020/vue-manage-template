@@ -35,39 +35,40 @@ open://localhost:8085/
 ## 目录划分
 
 ```tex
-│  index.html
-│  package.json
-│  README.md
-├─build -- webpack
-├─config -- webpack 配置
-├─dist  -- 打包后生成的文件
-├─src
-│  │  main.js -- 项目入口
-│  ├─assets -- 资源
-│  ├─components -- 组件
-│  ├─config -- 配置
-│  ├─filter -- vue 过滤器
-│  ├─router -- 路由配置
-│  ├─services -- 服务端通讯
-│  │  └─xhr
-│  │          xhr.js
-│  ├─stores -- vuex
-│  ├─util -- util
-│  ├─validate
-│  └─views
-│      │  App.vue -- 根文件
-│      │  index.vue -- 主页
-│      │  login.vue -- 登录
-│      │  main.vue -- 公共部分  (带有header/aside的框子)
-│      │  router-bridge.vue -- 用于 vue-router 过度
-│      ├─base
-│      │      404.vue
-│      └─demo
-└─static
-    ├─css
-    ├─font
-    ├─images
-    └─js
+vue-manage-template
+  │  index.html
+  │  package.json
+  │  README.md
+  ├─build -- webpack
+  ├─config -- webpack 配置
+  ├─dist  -- 打包后生成的文件
+  ├─src
+  │  │  main.js -- 项目入口
+  │  ├─assets -- 资源
+  │  ├─components -- 组件
+  │  ├─config -- 配置
+  │  ├─filter -- vue 过滤器
+  │  ├─router -- 路由配置
+  │  ├─services -- 服务端通讯
+  │  │  └─xhr
+  │  │          xhr.js
+  │  ├─stores -- vuex
+  │  ├─util -- util
+  │  ├─validate
+  │  └─views
+  │      │  App.vue -- 根文件
+  │      │  index.vue -- 主页
+  │      │  login.vue -- 登录
+  │      │  main.vue -- 公共部分  (带有header/aside的框子)
+  │      │  router-bridge.vue -- 用于 vue-router 过度
+  │      ├─base
+  │      │      404.vue
+  │      └─demo
+  └─static
+      ├─css
+      ├─font
+      ├─images
+      └─js
 ```
 
 
@@ -323,9 +324,6 @@ router.afterEach(route => {
 ```
 
 
-
-
-
 ### 减少打包后文件大小
 
 > config/index.js:11
@@ -340,3 +338,18 @@ productionSourceMap: false
 
 - [ ] 菜单级别 + 1
 - [ ] 样式美化
+
+
+
+### 日志
+
+#### 2017年3月15日
+
+1. - [ ] 更改布局方式，目前为 header/aside 通过定位定位上的，可以更改为通过 flex 实现
+
+2. - [ ] 添加消息模块样式
+
+   ​
+
+
+
