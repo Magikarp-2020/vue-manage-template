@@ -8,18 +8,13 @@ html, body {
 }
 
 .router-loading {
-    background: #00a8ff;
+    overflow: hidden;
+    background: #ecf0f1;
     width: 100%;
     height: 100%;
-    position: relative
-}
-
-.router-loading > .loading-img {
-    width: 600px;
-    height: 450px;
-    position: absolute;
-    left: 50%;
-    margin-left: -300px;
-    top: 50%;
-    margin-top: -225px
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
 }

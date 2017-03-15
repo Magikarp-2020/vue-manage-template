@@ -30,7 +30,7 @@ new Vue({
     components: {App},
     router,
     store
-}).$mount('#app');
+}).$mount('#vueApp');
 
 Date.prototype.Format = function (fmt) {
     let o = {

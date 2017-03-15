@@ -1,5 +1,5 @@
 <template>
-    <div v-loading.body="loading" class="main-box" :class="{'menu-hide': !menuStatus}">
+    <div class="main-box" :class="{'menu-hide': !menuStatus}">
         <header class="header">
             <v-header logo="static/images/logo.png"></v-header>
         </header>

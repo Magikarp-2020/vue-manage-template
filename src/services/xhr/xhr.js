@@ -12,6 +12,16 @@ Vue.http.headers.common['Accept'] = 'application/json';
 Vue.http.options.emulateJSON = true;
 Vue.http.options.credentials = true;
 
+/**
+ *  XMLHttpRequest
+ * @param url
+ * @param body get|post 传入的数据
+ * @param method get|post
+ * @param root 自定义域名，如果没有默认从 src/config/config.js > rootPath 获取
+ * @param diyError 自定义错误显示方式，目前根据实际业务存放有部分拦截代码
+ * @param diyLoading 自定义loading方式，禁用默认loading
+ * @return {Promise}
+ */
 export default ({url, body = {}, method = 'get', root, diyError = false, diyLoading = false}) => {
     if (!root) {
         url = rootPath() + url;

@@ -4,10 +4,6 @@ $header-height: 50px;
 $aside-width: 175px;
 $breadcrumb-height: 36px;
 
-body {
-  background: #00a8ff;
-}
-
 header.header {
   padding-left: 20px;
   background: #fff;
@@ -198,21 +194,4 @@ aside.aside {
     padding-left: 20px;
     transition: all 0.4s;
   }
-}
-
-.router-loading {
-  background: #00a8ff;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.router-loading > .loading-img {
-  width: 600px;
-  height: 450px;
-  position: absolute;
-  left: 50%;
-  margin-left: -300px;
-  top: 50%;
-  margin-top: -225px;
 }
