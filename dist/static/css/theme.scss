@@ -32,12 +32,23 @@ header.header {
   }
   .header-right-box {
     float: right;
-    padding-right: 10px;
+    padding-right: 5px;
     .header-right-item {
+      transition: all .25s;
+      box-sizing: border-box;
       height: $header-height;
+      line-height: $header-height - 8;
+      margin-left: 8px;
+      padding: 4px;
       float: left;
       &:last-of-type {
         margin-right: 0;
+      }
+      i {
+        line-height: $header-height - 8;
+        height:$header-height - 8;
+        font-size: 24px;
+        display: inline-block;
       }
       &:hover {
         background: #E5E9F2;
@@ -53,6 +64,7 @@ header.header {
       height: $header-height - 10;
       width: 20px;
       float: right;
+      line-height: 15px;
       padding-top: $header-height/2;
       padding-left: 10px;
     }
@@ -100,7 +112,7 @@ aside.aside {
     top: $header-height;
     left: 0;
     right: 0;
-    bottom: 0px;
+    bottom: 0;
     position: absolute;
   }
   .label {
@@ -112,6 +124,11 @@ aside.aside {
 
 .common-content {
   //overflow: hidden;
+  /*position: absolute;
+  top: $header-height;
+  left: $aside-width;
+  right: 0;
+  bottom: 0;*/
   padding: $header-height 0 0 $aside-width;
   transition: all 0.4s;
   .breadcrumb {
@@ -120,7 +137,7 @@ aside.aside {
     background: #ffffff;
     padding-left: 8px;
     color: #1F2D3D;
-    border-bottom:2px solid #d8d8d8;
+    border-bottom: 2px solid #d8d8d8;
     span {
       line-height: $breadcrumb-height;
     }
