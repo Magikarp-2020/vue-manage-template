@@ -42,6 +42,7 @@ vue-manage-template
   ├─build -- webpack
   ├─config -- webpack 配置
   ├─dist  -- 打包后生成的文件
+  ├─mock  -- 模拟数据
   ├─src
   │  │  main.js -- 项目入口
   │  ├─assets -- 资源
@@ -137,6 +138,39 @@ export const getRoot = () => {
 
 
 
+### dev 下通过 mock 模拟数据（未完善）
+
+>  vue-manage-template 下 新增 `mock` 文件夹用于存放模拟数据
+
+修改 `build/dev-server.js:59` 添加 `express`静态代理
+
+```javascript
+app.use('/mock', express.static('./mock'));
+```
+
+截止于 2017-3-15 18:04:15 时临时解决方案为 `src/config/config.js:51` 将后端统一命名空间更改为`mock` 后 `src/services/xhr/xhr.js:31`  添加 `.json` 后缀
+
+
+
+> src/config/config.js:51
+
+```javascript
+// const CONTEXT_NAME = conf.context_name || 'api';  更改为 ↓↓
+const CONTEXT_NAME = conf.context_name || 'mock';
+```
+
+> src/services/xhr/xhr.js:31
+
+```javascript
+url += '.json';
+```
+
+
+
+ 
+
+
+
 ### 根据后端业务确定XMLHttpRequest所需要的配置
 
 
@@ -226,6 +260,7 @@ router.afterEach(route => {
 ```javascript
 {
     path: '',
+    // 对应后端返回的权限
     key: 'myHome',
     // 面包屑
     text: '首页',

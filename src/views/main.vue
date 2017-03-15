@@ -23,6 +23,15 @@
     import aside from 'components/common/aside';
 
     export default {
+        created() {
+            let userInfo = {};
+            try {
+                userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+                this.$store.commit('setUserInfo', userInfo);
+            } catch (e) {
+                this.$alert('获取用户信息失败');
+            }
+        },
         computed: {
             menuStatus() {
                 return this.$store.state['config'].menuStatus;

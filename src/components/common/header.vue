@@ -5,7 +5,7 @@
             <message class="header-right-item"></message>
             <el-dropdown class="header-right-item" trigger="click" @command="headMenuChange">
                 <a class="header-head clearfix" href="javascript:;">
-                    <img class="header-head-img userface-hook" src="~assets/test.png">
+                    <img class="header-head-img userface-hook" :src="userInfo.face">
                     <div class="caret-box"><span class="caret"></span></div>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
@@ -23,6 +23,11 @@
             logo: {
                 type: String,
                 default: ''
+            }
+        },
+        computed: {
+            userInfo() {
+                return this.$store.state.user.info;
             }
         },
         methods: {

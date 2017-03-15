@@ -7,6 +7,7 @@ import Vuex from 'vuex';
 import demo from './modules/demo';
 import loading from './modules/loading';
 import config from './modules/config';
+import user from './modules/user';
 
 Vue.use(Vuex);
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     modules: {
         demo,
         loading,
-        config
+        config,
+        user
     }
 });
 

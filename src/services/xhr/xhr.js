@@ -28,6 +28,7 @@ export default ({url, body = {}, method = 'get', root, diyError = false, diyLoad
     } else {
         url = root + url;
     }
+    url += '.json';
     return new Promise((resolve, reject) => {
         if (!diyLoading) {
             store.commit('addLoading', {

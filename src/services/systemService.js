@@ -6,7 +6,7 @@ import xhr from './xhr/xhr';
 class SystemService {
     login(body) {
         return xhr({
-            url: '/api/login',
+            url: '/login',
             type: 'post',
             body
         });

@@ -15,14 +15,8 @@ const config = {
         /**
          * 可以理解为初始化
          */
-        setUserInfo(state, userInfo) {
-            try {
-                userInfo = JSON.parse(userInfo);
-            } catch (e) {
-            }
-
+        dialogInit(state) {
             state.needLoginDialog = true;
-            /*  */
         },
         xhrGoLogin(state) {
             if (state.needLoginDialog) {
@@ -36,7 +30,7 @@ const config = {
                 });
             }
         },
-        loginOut(state, val) {
+        loginOut(state) {
             state.needLoginDialog = false;
             state.menuStatus = true;
             window.localStorage.clear();

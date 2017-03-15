@@ -37,16 +37,18 @@ export const getRoot = () => {
     if (window.CHANGE_ROOT) {
         ROOT = window.CHANGE_ROOT;
     } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        ROOT = '//dev.demo.local';
+        // 根据实际业务填写
+        // ROOT = '//dev.demo.local';
+        ROOT = window.location.origin;
     } else {
-        ROOT = '';
+        ROOT = window.location.origin;
     }
     return ROOT;
 };
 
 export const rootPath = (conf = {}) => {
-    let ROOT = conf.root || getRoot();  // mosu.odata.me    dev.mosu.local
-    const CONTEXT_NAME = conf.context_name || 'teamwork';
+    let ROOT = conf.root || getRoot();
+    const CONTEXT_NAME = conf.context_name || 'mock';
 
     return ROOT + '/' + CONTEXT_NAME;
 };
