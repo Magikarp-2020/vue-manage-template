@@ -79,6 +79,7 @@ open://localhost:8085/
 1. 组件放于 `components `目录下
 2. 用于前端项目开发的配置文件统一放在 `config `目录下
 3. 路由配置放于 `router` 目录下
+   1. 路由最好按照菜单层级划分，对应的父级可利用`src/views/router-bridge.vue` 文件来过渡，详情可见[router菜单的分级](#router菜单的分级) 及 [通过路由配置生成菜单及权限管理](#通过路由配置生成菜单及权限管理)
 4. 与服务端通讯的接口放在 `servers` 文件目录下 **注意，一个js文件应当对应一个模块的接口，且不可在其余地方不经过services调用私自发起请求**
 5. 独立的验证方式放在`validate`下
 6. 工具类放在`util`下 也可另外引入如[Underscore](http://github.com/jashkenas/underscore/)的工具类
@@ -212,8 +213,9 @@ router.afterEach(route => {
 ### 修改初始化loading动画
 
 1. 修改图片 `static/images/loading.gif`;
-
 2. 修改css `static/css/loading.css`
+
+
 
 
 ### 通过路由配置生成菜单及权限管理
@@ -237,7 +239,7 @@ router.afterEach(route => {
 
 > menu
 
-```html
+```vue
 <el-menu :default-active="getRouterLink" class="menu-self" :router="true">
     <el-submenu v-for="(map,index) in routerMap" v-if="map.children && !map.hide && map.jurisdiction" :index="index+''">
         <template slot="title"><i :class="map.icon"></i>{{map.text}}</template>
@@ -251,6 +253,78 @@ router.afterEach(route => {
     </el-menu-item>
 </el-menu>
 ```
+
+
+
+### router的配置
+
+> src/router/map/viewMap.js
+
+单级菜单：
+
+```javascript
+{
+    path: '',
+    key: 'myHome',
+    text: '首页',
+    jurisdiction: true,
+    icon: 'el-icon-setting',
+    component: resolve => {
+        require(['views/index'], resolve);
+    }
+}
+```
+
+两级菜单(暂未实现 3/4 级 需要的可自行添加)
+
+父级菜单 `component ` 需要使用 `router-bridge` 空页面来实现路由分级效果，尽量避免使用多个空页面，不方便于后期维护
+
+```javascript
+{
+    path: 'father',
+    key: 'myHome',
+    text: '父菜单',
+    jurisdiction: true,
+    icon: 'el-icon-setting',
+    component: resolve => {
+        require(['views/router-bridge'], resolve);
+    },
+    children: [
+        {
+            path: 'child1',
+            key: 'myHome',
+            text: '大儿子',
+            jurisdiction: true,
+            icon: 'el-icon-setting',
+            component: resolve => {
+                require(['views/demo/child1'], resolve);
+            }
+        }
+    ]
+}
+```
+
+> src/views/router-bridge.vue
+
+```vue
+<template>
+    <router-view></router-view>
+</template>
+
+<script type="text/ecmascript-6">
+    export default {};
+
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+
+```
+
+
+
+
 
 ### 减少打包后文件大小
 
