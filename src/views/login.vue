@@ -22,6 +22,7 @@
 
 <script>
     import $ from 'assets/jquery-vendor';
+    import systemService from 'services/systemService';
 
     export default {
         data() {
@@ -34,7 +35,8 @@
         },
         methods: {
             login() {
-                this.$router.replace('/main/');
+                systemService.login();
+//                this.$router.replace('/main/');
             }
         }
     };

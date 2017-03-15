@@ -28,7 +28,6 @@ export default ({url, body = {}, method = 'get', root, diyError = false, diyLoad
     } else {
         url = root + url;
     }
-    body.team_id = window.localStorage.getItem('at_team');
     return new Promise((resolve, reject) => {
         if (!diyLoading) {
             store.commit('addLoading', {
