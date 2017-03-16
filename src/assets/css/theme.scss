@@ -174,18 +174,21 @@ aside.aside {
 }
 
 .menu-animate {
+  $width: 18px;
+  $height: 30px;
   position: absolute;
-  right: -26px;
-  width: 26px;
-  height: 38px;
+  right: -$width;
+  width: $width;
+  height: $height;
   top: 50%;
   text-align: center;
   background: #D3DCE6;
   border-radius: 0 7px 7px 0;
   cursor: pointer;
   i {
-    font-size: 20px;
-    line-height: 38px;
+    font-size: 14px;
+    line-height: $height;
+    font-weight: bold;
     color: #324057;
   }
 }

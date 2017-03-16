@@ -8,7 +8,7 @@ import VueResource from 'vue-resource';
 import router from 'router/index.js';
 import App from 'views/App.vue';
 
-import 'static/css/style.scss';
+import './assets/css/style.scss';
 import './filter/index.js';
 import store from 'stores/store.js';
 

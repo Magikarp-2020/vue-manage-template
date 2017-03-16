@@ -1,9 +1,14 @@
+---
+
+---
+
 [TOC]
 
 # vue-manage-template
 
 vue的后台管理模板,利用  [element-ui](http://element.eleme.io/#/zh-CN)  结合自己项目整理出来的,还有很多不足希望大家多多理解,
 如有意见或建议欢迎 issue，如果你觉得还不错不妨点个 star⭐ ⭐ ⭐  吧 [在线演示地址](https://skioll.github.io/vue-manage-template/dist/#/)
+建议下载本地运行，因为mock数据等关系，可能并不稳定
 
 ```
 git clone https://github.com/skioll/vue-manage-template.git
@@ -167,13 +172,7 @@ export const getRoot = () => {
 
 >  vue-manage-template 下 新增 `mock` 文件夹用于存放模拟数据
 
-修改 `build/dev-server.js:59` 添加 `express`静态代理
-
-```javascript
-app.use('/mock', express.static('./mock'));
-```
-
-截止于 2017-3-15 18:04:15 时临时解决方案为 `src/config/config.js:51` 将后端统一命名空间更改为`mock` 后 `src/services/xhr/xhr.js:31`  添加 `.json` 后缀
+截止于 2017-3-15 18:04:15 时临时解决方案为 `src/config/config.js:51` 将后端统一命名空间更改为`static/mock` 后 `src/services/xhr/xhr.js:31`  添加 `.json` 后缀，从`src/static/mock`下获得数据，在dev及prod 都可使用
 
 
 
@@ -181,7 +180,7 @@ app.use('/mock', express.static('./mock'));
 
 ```javascript
 // const CONTEXT_NAME = conf.context_name || 'api';  更改为 ↓↓
-const CONTEXT_NAME = conf.context_name || 'mock';
+const CONTEXT_NAME = conf.context_name || 'static/mock';
 ```
 
 > src/services/xhr/xhr.js:31
@@ -323,7 +322,7 @@ router.afterEach(route => {
 
    > src/components/common/limitButton.vue
 
-   ```vue
+```vue
    <template>
        <el-button :type="type" :size="size" :icon="icon" :disabled="limitNoAccess" @click="handleClick">
            <slot></slot>
@@ -431,7 +430,7 @@ router.afterEach(route => {
        };
 
    </script>
-   ```
+```
 
    ​
 

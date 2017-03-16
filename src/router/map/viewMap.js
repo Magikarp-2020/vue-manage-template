@@ -20,6 +20,15 @@ export default [{
         require(['views/demo/view1'], resolve);
     }
 }, {
+    path: 'list',
+    key: 'list',
+    text: '列表',
+    jurisdiction: true,
+    icon: 'el-icon-setting',
+    component: resolve => {
+        require(['views/demo/list'], resolve);
+    }
+}, {
     path: 'father',
     key: 'myHome',
     text: '父菜单',
