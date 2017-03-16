@@ -1,26 +1,23 @@
 <template>
     <div class="box">
         index
-        <limit-btn limit="goods:c,d">ghjkl</limit-btn>
+        <limit-btn limit="goods:c">增加</limit-btn>
+        <limit-btn limit="goods:d">删除</limit-btn>
+        <limit-btn limit="goods:u">修改</limit-btn>
+        <limit-btn limit="goods:r">查找</limit-btn>
     </div>
 </template>
 
 <script>
     export default {
         data() {
-            return {
-
-            };
+            return {};
         },
-        computed: {
-        },
+        computed: {},
         created() {
         },
-        methods: {
-
-        },
-        components: {
-        }
+        methods: {},
+        components: {}
     };
 
 </script>
