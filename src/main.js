@@ -15,6 +15,8 @@ import store from 'stores/store.js';
 import 'element-ui/lib/theme-default/index.css';
 import {defaultUserFace} from 'config/config';
 
+import 'components/registerGlobalComponents';
+
 document.addEventListener('error', (e) => {
     let elem = e.target;
     if ((elem.className.indexOf('userface-hook') > -1)) {

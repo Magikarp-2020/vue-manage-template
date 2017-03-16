@@ -1,6 +1,7 @@
 <template>
     <div class="box">
         index
+        <limit-btn limit="goods:c,d">ghjkl</limit-btn>
     </div>
 </template>
 

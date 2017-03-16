@@ -3,7 +3,7 @@
 # vue-manage-template
 
 vue的后台管理模板,利用  [element-ui](http://element.eleme.io/#/zh-CN)  结合自己项目整理出来的,还有很多不足希望大家多多理解,
-如有意见或建议欢迎 issue，如果你觉得还不错不妨点个 star  吧 [在线演示地址](https://skioll.github.io/vue-manage-template/dist/#/)
+如有意见或建议欢迎 issue，如果你觉得还不错不妨点个 star⭐ ⭐ ⭐  吧 [在线演示地址](https://skioll.github.io/vue-manage-template/dist/#/)
 
 ```
 git clone https://github.com/skioll/vue-manage-template.git
@@ -89,6 +89,31 @@ vue-manage-template
 8. 静态资源放在 `/static` 下 部分用于缓存的文件放在 `assets `  下
 
 
+#### 全局组件的安装
+
+> 于 src/components/registerGlobalComponents.js 注册全局组件，后再 main.js(入口文件) 引入
+
+```javascript
+// registerGlobalComponents.js
+import Vue from 'vue';
+import limitBtn from './common/limitButton';
+
+Vue.component(limitBtn.name, limitBtn);
+```
+
+
+
+```javascript
+// main.js
+import 'components/registerGlobalComponents';
+```
+
+
+
+
+
+
+
 
 ## 存在的 loading 动画
 
@@ -127,7 +152,7 @@ export const getRoot = () => {
     let ROOT = '';
     if (window.CHANGE_ROOT) {
         ROOT = window.CHANGE_ROOT;
-    } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    } else if (process.env.NODE_ENV === 'development') { // 判断是否为 dev 环境    -> config/dev.env.js:5
         ROOT = '//dev.demo.local';
     } else {
         ROOT = '';
@@ -164,10 +189,6 @@ const CONTEXT_NAME = conf.context_name || 'mock';
 ```javascript
 url += '.json';
 ```
-
-
-
- 
 
 
 
@@ -292,6 +313,128 @@ router.afterEach(route => {
 
 
 
+### 功能模块的权限控制
+
+> 例，操作商品时有对应的CRUD权限，这时，我们需要对用户对应的操作做出限制
+
+1.  操作按钮 disabled
+
+   加入了新的组件  `limit-btn` 用于匹配及判断用户是否具有对应操作按钮的权限**注意：此功能需要先与后端协调好对应的权限名，详情可以看代码注释**
+
+   > src/components/common/limitButton.vue
+
+   ```vue
+   <template>
+       <el-button :type="type" :size="size" :icon="icon" :disabled="limitNoAccess" @click="handleClick">
+           <slot></slot>
+       </el-button>
+   </template>
+
+   <script type="text/ecmascript-6">
+       /**
+        * 权限按钮：
+        * 基于element-ui button 组件二次封装
+        * 后端返回权限格式 :
+        * {
+        *      "permissions":{     //拥有权限列表
+        *      "resourceName1": ["c","u"],
+        *      "resourceName2": ["*"]
+        * }
+        *
+        * 组件传入的权限格式:      limitName:option1,option2
+        *
+        * props: type size icon limit
+        * emit: click
+        *
+        */
+       export default {
+           name: 'limitBtn',
+           props: {
+               type: {
+                   type: String,
+                   default: ''
+               },
+               size: {
+                   type: String,
+                   default: ''
+               },
+               icon: {
+                   type: String,
+                   default: ''
+               },
+               limit: {
+                   type: String,
+                   default: ''
+               }
+           },
+           data() {
+               return {};
+           },
+           computed: {
+               limitList() {
+                   return this.$store.getters.limitList;
+               },
+               /**
+                * 将传入的权限数据转化为 json
+                * @return {{key: string, value: Array}}
+                */
+               btnLimit() {
+                   let json = {
+                       key: '',
+                       value: []
+                   };
+
+                   try {
+                       if (typeof this.limit === 'string') {
+                           json.key = this.limit.split(':')[0];
+                           json.value = this.limit.split(':')[1].split(',');
+                       }
+                   } catch (e) {
+                       throw new Error('权限传入格式错误！');
+                   }
+
+                   return json;
+               },
+               /**
+                * 判断是否具有相应权限
+                * @return {boolean}
+                */
+               limitNoAccess() {
+                   // 当 limitList 为 * 时开通所有权限
+                   if (this.limitList === '*') {
+                       return false;
+                   }
+
+                   let limit = this.limitList[this.btnLimit.key];
+                   if (limit) {
+                       // 对应权限为 * 开通当前功能的所有权限
+                       if (limit === '*') {
+                           return false;
+                       }
+                       let arrLimit = true;
+                       // 同时需要多个权限的情况（应该遇不到吧）;
+                       this.btnLimit.value.forEach(value => {
+                           if (limit.indexOf(value) === -1) {
+                               arrLimit = false;
+                           }
+                       });
+                       return !arrLimit;
+                   }
+                   return true;
+               }
+           },
+           methods: {
+               handleClick() {
+                   this.$emit('click');
+               }
+           }
+       };
+
+   </script>
+   ```
+
+   ​
+
 ### router的配置
 
 > src/router/map/viewMap.js
@@ -388,13 +531,16 @@ productionSourceMap: false
 
 #### 2017年3月15日
 
-1. - [ ] 更改布局方式，目前为 header/aside 通过定位定位上的，可以更改为通过 flex 实现
+1. - [x] 更改布局方式，目前为 header/aside 通过定位定位上的，可以更改为通过 flex 实现
 
    >  不方便设置高度，暂不处理
 
 2. - [ ] 添加消息模块样式
 
-   ​
 
 
 
+
+#### 2017年3月16日
+
+1. - [x] 增加权限控制
