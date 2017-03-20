@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="file" name="" id="" multiple="multiple">
+        <input type="text" v-model="demoText" name="" id="">
     </div>
 </template>
 
