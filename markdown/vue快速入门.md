@@ -184,6 +184,8 @@ dist/index
 
 ### webstorm 
 
+> 其他编辑器自行解决。
+
 #### 安装 vue 高亮
 
 setting -> plugins
@@ -197,6 +199,317 @@ setting -> Languages & Frameworks -> javascript
 将 版本更换为 ECMAScript6
 
 ![](./images/webstormECMAScript.jpg)
+
+#### vue 文件默认模板
+
+> setting->Editor->File and Code Template-> Vue File
+
+```vue
+<template>
+
+</template>
+
+<script  type="text/ecmascript-6">
+    export default {};
+    
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+
+## vue 语法
+
+### 默认单页面结构
+
+> tempalte 格式可以默认存储在 webstorm `setting->Editor->File and Code Template-> Vue File`
+
+
+```vue
+<template>
+	<div>template 下只能存在一个元素</div>
+</template>
+
+<!-- 此处可以添加 lange 预处理语言 -->
+<script  type="text/ecmascript-6">
+    export default {};
+    
+</script>
+<!-- css 使用 sass 预处理，添加 rel 避免编辑器报错 -->
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+
+
+### v-on & v-bind
+
+- v-bind [http://cn.vuejs.org/v2/api/#v-bind](http://cn.vuejs.org/v2/api/#v-bind)
+
+  > 动态地绑定一个或多个特性，或一个组件 prop 到表达式。  可以理解为传值
+
+  ```vue
+  <!-- 绑定一个属性 -->
+  <img v-bind:src="imageSrc">
+
+  <!-- 缩写 -->
+  <img :src="imageSrc">
+
+  <!-- with inline string concatenation -->
+  <img :src="'/path/to/images/' + fileName">
+
+  <!-- class 绑定 -->
+  <div :class="{ red: isRed }"></div>
+  <div :class="[classA, classB]"></div>
+  <div :class="[classA, { classB: isB, classC: isC }]">
+
+  <!-- style 绑定 -->
+  <div :style="{ fontSize: size + 'px' }"></div>
+  <div :style="[styleObjectA, styleObjectB]"></div>
+
+  <!-- 绑定一个有属性的对象 -->
+  <div v-bind="{ id: someProp, 'other-attr': otherProp }"></div>
+
+  <!-- 通过 prop 修饰符绑定 DOM 属性 -->
+  <div v-bind:text-content.prop="text"></div>
+
+  <!-- prop 绑定. “prop” 必须在 my-component 中声明。 -->
+  <my-component :prop="someThing"></my-component>
+
+  <!-- XLink -->
+  <svg><a :xlink:special="foo"></a></svg>
+  ```
+
+- v-on [http://cn.vuejs.org/v2/api/#v-on](http://cn.vuejs.org/v2/api/#v-on)
+
+  > 用在普通元素上时，只能监听 **原生 DOM 事件**。用在自定义元素组件上时，也可以监听子组件触发的**自定义事件**。
+
+  ```vue
+  <!-- 方法处理器 -->
+  <button v-on:click="doThis"></button>
+  <!-- 内联语句 -->
+  <button v-on:click="doThat('hello', $event)"></button>
+  <!-- 缩写 -->
+  <button @click="doThis"></button>
+  <!-- 停止冒泡 -->
+  <button @click.stop="doThis"></button>
+  <!-- 阻止默认行为 -->
+  <button @click.prevent="doThis"></button>
+  <!-- 阻止默认行为，没有表达式 -->
+  <form @submit.prevent></form>
+  <!--  串联修饰符 -->
+  <button @click.stop.prevent="doThis"></button>
+  <!-- 键修饰符，键别名 -->
+  <input @keyup.enter="onEnter">
+  <!-- 键修饰符，键代码 -->
+  <input @keyup.13="onEnter">
+  ```
+
+  ​
+
+
+
+
+
+### vue 各种方法
+
+> 建议前往官网查看 链接[vueJs](http://cn.vueJs.org)
+
+
+
+#### data
+
+> 绑定数据，在methods 中使用只能通过 this.name 来访问
+
+**data 必须是一个 function 并且 return json 出来**
+
+```vue
+<template>
+	<div>{{test}}</div>
+</template>
+
+<script>
+    export default {
+      data() {
+        return {
+          test: 123
+        }
+      }
+    };
+    
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+#### methods
+
+> 方法
+
+```vue
+<template>
+	<div><button v-on:click="methodName"></button></div>
+</template>
+
+<script>
+    export default {
+      methods: {
+        methodName() {
+          console.log('method running..')
+        }
+      }
+    };
+    
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+#### computed
+
+> 计算属性 [详细介绍](http://cn.vuejs.org/v2/api/#computed)
+
+```vue
+<template>
+	<div><button v-on:click="methodName"></button></div>
+</template>
+
+<script>
+    export default {
+      data: { a: 1 },
+      computed: {
+        // 仅读取，值只须为函数
+        aDouble: function () {
+          return this.a * 2
+        }
+      }
+    };
+    
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+#### watch
+
+```vue
+<template>
+	<div><button v-on:click="methodName"></button></div>
+</template>
+
+<script>
+data: {
+    a: 1,
+    b: 2,
+    c: 3
+  },
+  watch: {
+    a: function (val, oldVal) {
+      console.log('new: %s, old: %s', val, oldVal)
+    },
+    // 方法名
+    b: 'someMethod',
+    // 深度 watcher
+    c: {
+      handler: function (val, oldVal) { /* ... */ },
+      deep: true
+    }
+  }
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+
+
+#### props
+
+> 用于接收来自父组件的数据
+
+```vue
+<!-- components/componentName -->
+<template>
+	<button @click="handleClick">{{componentId}} + {{number}}</button>
+</template>
+
+<script>
+	export default {
+      props: {
+        number: {
+          type: Number,
+          default: 0
+        },
+        componentId: {
+          type: String,
+          default: '',
+          required: true
+        }
+      },
+      methods: {
+        handleClick() {
+          // 触发自定义事件
+          this.$emit('click');
+        }
+      }
+	}
+    
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+
+
+#### components
+
+> components 用于注册组件
+
+```vue
+<template>
+	<div>template 下只能存在一个元素
+      	<!-- 调用组件 -->
+      	<components component-id="lalal" :number="213" @click="fatherClick"></components>
+  	</div>
+</template>
+
+<script>
+	// 引入一个 src/components 下 componentName 的文件，文件需要符合 es6 规范
+	import componentName from 'components/componentName';
+	
+    export default {
+      components: {components},
+      methods: {
+        fatherClick() {
+          console.log('father method run');
+        }
+      }
+    };
+    
+</script>
+
+<style lang="scss" rel="stylesheet/scss">
+
+</style>
+```
+
+
+
+其余 vue-router vuex 自行研究，太多了撸不完
+
+
 
 
 
