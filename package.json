@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "baguettebox.js": "^1.8.2",
     "element-ui": "^1.1.4",
     "jquery": "^3.1.1",
     "vue": "^2.1.0",
