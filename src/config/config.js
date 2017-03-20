@@ -51,7 +51,7 @@ export const rootPath = (conf = {}) => {
     let ROOT = (conf.root || getRoot()) + window.location.pathname;
     const CONTEXT_NAME = conf.context_name || 'static/mock';
 
-    return ROOT + '/' + CONTEXT_NAME;
+    return ROOT + CONTEXT_NAME;
 };
 
 export const successHandler = (res) => {

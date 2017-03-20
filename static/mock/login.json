@@ -11,9 +11,7 @@
         "c",
         "u"
       ],
-      "resourceName2": [
-        "*"
-      ]
+      "any": "*"
     },
     "face": "static/images/icon.png",
     "created_at": 1489570321,

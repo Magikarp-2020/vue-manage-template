@@ -11,24 +11,6 @@ export default [{
         require(['views/index'], resolve);
     }
 }, {
-    path: 'demo1',
-    key: 'myHome',
-    text: '菜单1',
-    jurisdiction: true,
-    icon: 'el-icon-setting',
-    component: resolve => {
-        require(['views/demo/view1'], resolve);
-    }
-}, {
-    path: 'list',
-    key: 'list',
-    text: '列表',
-    jurisdiction: true,
-    icon: 'el-icon-setting',
-    component: resolve => {
-        require(['views/demo/list'], resolve);
-    }
-}, {
     path: 'father',
     key: 'myHome',
     text: '父菜单',
@@ -45,7 +27,7 @@ export default [{
             jurisdiction: true,
             icon: 'el-icon-setting',
             component: resolve => {
-                require(['views/demo/child1'], resolve);
+                require(['views/father/child1'], resolve);
             }
         }, {
             path: 'child2',
@@ -54,7 +36,46 @@ export default [{
             jurisdiction: true,
             icon: 'el-icon-setting',
             component: resolve => {
-                require(['views/demo/child2'], resolve);
+                require(['views/father/child2'], resolve);
+            }
+        }
+    ]
+}, {
+    path: 'demo',
+    key: 'demo',
+    text: '示例',
+    jurisdiction: true,
+    icon: 'el-icon-setting',
+    component: resolve => {
+        require(['views/router-bridge'], resolve);
+    },
+    children: [
+        {
+            path: 'demo1',
+            key: 'myHome',
+            text: '菜单1',
+            jurisdiction: true,
+            icon: 'el-icon-setting',
+            component: resolve => {
+                require(['views/demo/view1'], resolve);
+            }
+        }, {
+            path: 'list',
+            key: 'list',
+            text: '列表',
+            jurisdiction: true,
+            icon: 'el-icon-setting',
+            component: resolve => {
+                require(['views/demo/list'], resolve);
+            }
+        }, {
+            path: 'picture',
+            key: 'picture-list',
+            text: '图片列表',
+            jurisdiction: true,
+            icon: 'el-icon-setting',
+            component: resolve => {
+                require(['views/demo/pictureList'], resolve);
             }
         }
     ]

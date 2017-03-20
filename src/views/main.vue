@@ -14,6 +14,9 @@
                 <router-view></router-view>
             </div>
         </div>
+        <div class="global-components">
+            <picture-popup/>
+        </div>
     </div>
 </template>
 
@@ -21,6 +24,7 @@
     import breadcrumb from 'components/breadcrumb/index';
     import header from 'components/common/header';
     import aside from 'components/common/aside';
+    import picturePopup from 'components/common/picturePopup';
 
     export default {
         created() {
@@ -40,7 +44,8 @@
         components: {
             breadcrumb,
             vHeader: header,
-            vAside: aside
+            vAside: aside,
+            picturePopup
         }
     };
 

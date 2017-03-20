@@ -9,7 +9,7 @@
                     <button>create</button>
                     <p class="message">Already registered? <a href="#">Sign In</a></p>
                 </form>
-                <form class="login-form">
+                <form class="login-form" @submit.prevent="login">
                     {{login.username}}
                     <input v-model="loginUsername" type="text" placeholder="用户名： root"/>
                     <input v-model="loginPassword" type="password" placeholder="密码: root"/>
@@ -19,7 +19,7 @@
                             <img src="~assets/captcha.jpg" alt="验证码">
                         </div>
                     </div>
-                    <button type="button" @click="login">登录</button>
+                    <button type="submit">登录</button>
                     <p class="message" v-if="canRegister">没有账号? <a href="#">注册账号</a></p>
                 </form>
             </div>
