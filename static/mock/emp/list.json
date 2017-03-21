@@ -1,0 +1,40 @@
+{
+  "code": 200,
+  "status": 200,
+  "data": {
+    "totalPage": 2,
+    "total": "7",
+    "current_page": "1",
+    "page_size": 4,
+    "list": [
+      {
+        "id": 1,
+        "name": "lichao",
+        "work_no": "7",
+        "real_name": "李超",
+        "role": "admin",
+        "createdAt": "1490004392",
+        "updateAt": "1490004392",
+        "mobile": "18215505077",
+        "email": "294645832@qq.com",
+        "dept": "前端大部门",
+        "face": "http://cn.vuejs.org/images/logo.png",
+        "disable": 1
+      },
+      {
+        "id": 2,
+        "name": "lichao",
+        "work_no": "7",
+        "real_name": "李超",
+        "role": "admin",
+        "createdAt": "1490004392",
+        "updateAt": "1490004392",
+        "mobile": "18215505077",
+        "email": "294645832@qq.com",
+        "dept": "前端大部门",
+        "face": "http://cn.vuejs.org/images/logo.png",
+        "disable": 0
+      }
+    ]
+  }
+}

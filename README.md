@@ -6,12 +6,8 @@
 
 # vue-manage-template
 
-vue的后台管理模板,利用  [element-ui](http://element.eleme.io/#/zh-CN)  结合自己项目整理出来的,还有很多不足希望大家多多理解,
-如有意见或建议欢迎 issue，如果你觉得还不错不妨点个 star⭐ ⭐ ⭐  吧 [在线演示地址](https://skioll.github.io/vue-manage-template/dist/#/)
-建议下载本地运行，因为mock数据等关系，可能并不稳定
-
 ```
-git clone https://github.com/skioll/vue-manage-template.git
+
 npm install
 npm run dev
 npm run build

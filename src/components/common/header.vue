@@ -3,21 +3,15 @@
         <img class="header-logo" :src="logo" alt="">
         <div class="header-right-box">
             <message class="header-right-item"></message>
-            <el-dropdown class="header-right-item" trigger="click" @command="headMenuChange">
-                <a class="header-head clearfix" href="javascript:;">
-                    <img class="header-head-img userface-hook" :src="userInfo.face">
-                    <div class="caret-box"><span class="caret"></span></div>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
-                    </el-dropdown-menu>
-                </a>
-            </el-dropdown>
+            <userInfo class="header-right-item"></userInfo>
         </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
     import message from './message';
+    import userInfo from './userInfo';
+    import systemService from 'services/systemService';
     export default {
         props: {
             logo: {
@@ -37,10 +31,20 @@
                         this.loginOut();
                         break;
                 }
+            },
+            loginOut() {
+                systemService.loginOut().then(({data}) => {
+                    if (data.data) {
+                        this.$store.commit('setUserInfo', {});
+                        window.localStorage.clear();
+                        this.$router.push('/');
+                    }
+                });
             }
         },
         components: {
-            message
+            message,
+            userInfo
         }
     };
 

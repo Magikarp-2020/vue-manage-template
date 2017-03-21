@@ -11,6 +11,29 @@ class SystemService {
             body
         });
     }
+
+    checkLogin() {
+        return xhr({
+            url: '/logined',
+            type: 'get'
+        });
+    }
+
+    loginOut() {
+        return xhr({
+            url: '/home/logout',
+            type: 'get'
+        });
+    }
+
+    changePassword(body) {
+        return xhr({
+            url: '/my/password',
+            type: 'post',
+            body
+        });
+    }
+
 }
 
 export default new SystemService();

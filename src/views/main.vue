@@ -23,6 +23,7 @@
     import breadcrumb from 'components/breadcrumb/index';
     import header from 'components/common/header';
     import aside from 'components/common/aside';
+    import systemService from 'services/systemService';
 
     export default {
         created() {
@@ -33,6 +34,12 @@
             } catch (e) {
                 this.$alert('获取用户信息失败');
             }
+            // 判断用户是否登录
+            systemService.checkLogin().then(({data}) => {
+                if (data.data) {
+                    console.log('checkLogin success');
+                }
+            });
         },
         computed: {
             menuStatus() {

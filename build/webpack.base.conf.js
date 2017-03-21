@@ -33,7 +33,7 @@ module.exports = {
             'views': path.resolve(__dirname, '../src/views'),
             'static': path.resolve(__dirname, '../static'),
             'services': path.resolve(__dirname, '../src/services'),
-            'util': path.resolve(__dirname, '../src/util'),
+            'utils': path.resolve(__dirname, '../src/utils'),
             'config': path.resolve(__dirname, '../src/config'),
             'validate': path.resolve(__dirname, '../src/validate'),
         }

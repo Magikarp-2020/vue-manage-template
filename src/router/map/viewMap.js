@@ -80,6 +80,26 @@ export default [{
         }
     ]
 }, {
+    path: 'human',
+    key: 'human',
+    text: '人员管理',
+    jurisdiction: true,
+    icon: 'el-icon-setting',
+    component: resolve => {
+        require(['views/router-bridge'], resolve);
+    },
+    children: [
+        {
+            path: 'staff',
+            key: 'staff',
+            text: '员工管理',
+            jurisdiction: true,
+            component: resolve => {
+                require(['views/human/staff'], resolve);
+            }
+        }
+    ]
+}, {
     path: '*',
     key: '404',
     text: '404',

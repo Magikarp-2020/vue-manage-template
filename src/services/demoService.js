@@ -6,7 +6,7 @@ import xhr from './xhr/xhr';
 class DemoService {
     demo(body) {
         return xhr({
-            url: "demo",
+            url: 'demo',
             method: 'post',
             body
         });

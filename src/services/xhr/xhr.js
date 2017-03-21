@@ -3,7 +3,7 @@
  */
 
 import Vue from 'vue';
-import util from 'util/util';
+import util from 'utils/util';
 import store from 'stores/store';
 import {rootPath, errHandler, successHandler} from 'config/config';
 
@@ -23,6 +23,7 @@ Vue.http.options.credentials = true;
  * @return {Promise}
  */
 export default ({url, body = {}, method = 'get', root, diyError = false, diyLoading = false}) => {
+    method = 'get';
     if (!root) {
         url = rootPath() + url;
     } else {
