@@ -38,8 +38,8 @@ export const getRoot = () => {
         ROOT = window.CHANGE_ROOT;
     } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         // 根据实际业务填写
-        // ROOT = '//dev.demo.local';
-        ROOT = window.location.origin;
+        ROOT = '//dev.demo.local';
+        // ROOT = window.location.origin;
     } else {
         ROOT = window.location.origin;
     }
