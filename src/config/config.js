@@ -38,8 +38,8 @@ export const getRoot = () => {
         ROOT = window.CHANGE_ROOT;
     } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         // 根据实际业务填写
-        // ROOT = '//dev.demo.local';
-        ROOT = window.location.origin;
+        ROOT = '//dev.base.local';
+        // ROOT = window.location.origin;
     } else {
         ROOT = window.location.origin;
     }
@@ -49,9 +49,9 @@ export const getRoot = () => {
 export const rootPath = (conf = {}) => {
     // 根据实际业务填写
     let ROOT = (conf.root || getRoot()) + window.location.pathname;
-    const CONTEXT_NAME = conf.context_name || 'static/mock';
+    const NAME_SPACE = conf.name_space || 'demo';
 
-    return ROOT + CONTEXT_NAME;
+    return ROOT + NAME_SPACE;
 };
 
 export const successHandler = (res) => {
