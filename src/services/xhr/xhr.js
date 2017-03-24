@@ -23,13 +23,13 @@ Vue.http.options.credentials = true;
  * @return {Promise}
  */
 export default ({url, body = {}, method = 'get', root, diyError = false, diyLoading = false}) => {
-    method = 'get';
+    // method = 'get';
     if (!root) {
         url = rootPath() + url;
     } else {
         url = root + url;
     }
-    url += '.json';
+    // url += '.json';
     return new Promise((resolve, reject) => {
         if (!diyLoading) {
             store.commit('addLoading', {

@@ -35,89 +35,21 @@
 
         <page :data="listData" @change="getListData"></page>
 
-        <el-dialog title="详情" v-model="staffDialog" size="small">
-
-            <div class="detail" v-if="staffStatus == 1">
-                <el-form label-width="120px">
-                    <img class="user-face" :src="staffDialogData.face" alt="用户头像">
-                    <el-form-item label="工号">
-                        {{staffDialogData.work_no}}
-                    </el-form-item>
-                    <el-form-item label="真实姓名">
-                        {{staffDialogData.real_name}}
-                    </el-form-item>
-                    <el-form-item label="手机号">
-                        {{staffDialogData.mobile}}
-                    </el-form-item>
-                    <el-form-item label="email">
-                        {{staffDialogData.email}}
-                    </el-form-item>
-                    <el-form-item label="所属部门">
-                        {{staffDialogData.dept}}
-                    </el-form-item>
-                </el-form>
-            </div>
-            <div class="detail" v-if="staffStatus == 2">
-                <el-form ref="staffDialogForm" :model="staffDialogData" :rules="staffDialogRules" label-width="120px">
-                    <img class="user-face" :src="staffDialogData.face" alt="用户头像">
-                    <el-form-item label="工号">
-                        {{staffDialogData.work_no}}
-                    </el-form-item>
-                    <el-form-item label="真实姓名" prop="real_name">
-                        <el-input type="text" v-model="staffDialogData.real_name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="手机号" prop="mobile">
-                        <el-input type="number" v-model="staffDialogData.mobile"></el-input>
-                    </el-form-item>
-                    <el-form-item label="email" prop="email">
-                        <el-input type="text" v-model="staffDialogData.email"></el-input>
-                    </el-form-item>
-                    <el-form-item label="所属部门" prop="dept">
-                        <el-input type="text" v-model="staffDialogData.dept"></el-input>
-                    </el-form-item>
-                </el-form>
-            </div>
-
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="resetPassword" v-if="staffStatus == 1">重置密码</el-button>
-                <el-button v-if="staffStatus == 1" @click="staffStatus = 2">修改资料</el-button>
-                <el-button v-else @click="staffChangeSubmit" type="success">确认修改</el-button>
-                <el-button @click="deleteStaff" v-if="staffStatus == 1" type="danger">删除员工</el-button>
-                <el-button type="primary" @click="staffDialog = false">关 闭</el-button>
-            </div>
-        </el-dialog>
+        <detail-dialog v-model="staffDialog" :data="staffDialogData"></detail-dialog>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
     import staffService from 'services/staffService';
     import util from 'utils/util';
+    import detailDialog from 'components/human/staff/detail.vue';
 
     export default {
         data() {
             return {
                 listData: {},
                 staffDialog: false,
-                staffStatus: 1,
-                staffDialogData: {},
-                staffDialogRules: {
-                    real_name: [
-                        {required: true, message: '请填写真实姓名'},
-                        {max: 5, min: 2, message: '姓名长度2-5字符之间'}
-                    ],
-                    mobile: [
-                        {required: true, message: '请填写手机号'},
-                        {pattern: /^1[0-9]{10}$/, message: '手机号格式错误'}
-                    ],
-                    email: [
-                        {required: true, message: '请填写 email'},
-                        {pattern: /^.*@.*\..*$/, message: 'email 格式错误'},
-                        {max: 99, message: 'email 不可超过99个字符'}
-                    ],
-                    dept: [
-                        {required: true, message: '请填写所在部门'}
-                    ]
-                }
+                staffDialogData: {}
             };
         },
         created() {
@@ -199,6 +131,9 @@
                     });
                 });
             }
+        },
+        components: {
+            detailDialog
         }
     };
 
