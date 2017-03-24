@@ -7,7 +7,7 @@ class SystemService {
     login(body) {
         return xhr({
             url: '/login',
-            type: 'post',
+            method: 'post',
             body
         });
     }
@@ -15,21 +15,21 @@ class SystemService {
     checkLogin() {
         return xhr({
             url: '/logined',
-            type: 'get'
+            method: 'get'
         });
     }
 
     loginOut() {
         return xhr({
             url: '/home/logout',
-            type: 'get'
+            method: 'get'
         });
     }
 
     changePassword(body) {
         return xhr({
             url: '/my/password',
-            type: 'post',
+            method: 'post',
             body
         });
     }

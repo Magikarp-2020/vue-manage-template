@@ -124,7 +124,7 @@
                             console.log(data);
                             this.passwordDialogVisible = false;
                         }, ({data}) => {
-                            this.$message.error(data.msg + '');
+//                            this.$message.error(data.msg + '');
                         });
                     }
                 });

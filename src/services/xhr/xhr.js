@@ -22,13 +22,18 @@ Vue.http.options.credentials = true;
  * @param diyLoading 自定义loading方式，禁用默认loading
  * @return {Promise}
  */
-export default ({url, body = {}, method = 'get', root, diyError = false, diyLoading = false}) => {
+export default ({url, body = {}, method = 'get', root, diyError = false, diyLoading = false, mock = false}) => {
     // method = 'get';
-    if (!root) {
+
+    if (mock) {
+        url = '/static/mock' + url + '.json';
+        method = 'get';
+    } else if (!root) {
         url = rootPath() + url;
     } else {
         url = root + url;
     }
+
     // url += '.json';
     return new Promise((resolve, reject) => {
         if (!diyLoading) {
@@ -48,6 +53,7 @@ export default ({url, body = {}, method = 'get', root, diyError = false, diyLoad
             }
             // delete body.body;
         }
+        console.log(body);
         Vue.http[method](url, body).then((response) => {
             if (!diyLoading) {
                 store.commit('removeLoading', 'http');

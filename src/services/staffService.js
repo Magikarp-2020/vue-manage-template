@@ -8,6 +8,7 @@ class StaffService {
         return xhr({
             url: '/emp/list',
             method: 'post',
+            mock: true,
             body
         });
     }

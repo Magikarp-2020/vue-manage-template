@@ -12,7 +12,7 @@
                 <form class="login-form" @submit.prevent="login">
                     {{login.username}}
                     <input v-model="loginUsername" type="text" placeholder="用户名： root"/>
-                    <input v-model="loginPassword" type="password" placeholder="密码: root"/>
+                    <input v-model="loginPassword" type="password" placeholder="密码: 123456"/>
                     <div class="captcha clearfix" v-if="needCaptcha">
                         <input v-model="loginCaptcha" type="text" placeholder="右侧验证码"/>
                         <div class="captcha-img-box">
@@ -56,19 +56,23 @@
             login() {
                 if (!this.loginUsername || !this.loginPassword) {
                     this.$alert('用户名或密码不能为空');
-                } else if (this.loginUsername === 'root' && this.loginPassword === 'root') {
-                    systemService.login().then(({data}) => {
-                        console.log(data);
-                        this.$store.commit('setUserInfo', data.data);
-                        this.$store.commit('dialogInit');
-                        this.$router.push('/main/');
-                    });
-                } else if (this.loginTime < 3) {
-                    this.loginTime++;
-                    this.needCaptcha = false;
-                } else {
-                    this.needCaptcha = true;
+                    return false;
                 }
+                systemService.login({
+                    username: this.loginUsername,
+                    password: this.loginPassword
+                }).then(({data}) => {
+                    console.log(data);
+                    this.$store.commit('setUserInfo', data.data);
+                    this.$store.commit('dialogInit');
+                    this.$router.push('/main/');
+                });
+                /*} else if (this.loginTime < 3) {
+                 this.loginTime++;
+                 this.needCaptcha = false;
+                 } else {
+                 this.needCaptcha = true;
+                 }*/
             }
         }
     };
