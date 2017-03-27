@@ -34,6 +34,15 @@ class SystemService {
         });
     }
 
+    getAuthList(body) {
+        return xhr({
+            url: '/data-resource/list',
+            method: 'get',
+            mock: true,
+            body
+        });
+    }
+
 }
 
 export default new SystemService();

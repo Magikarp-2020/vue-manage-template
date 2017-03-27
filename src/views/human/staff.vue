@@ -33,7 +33,7 @@
 
         <!--<page :data="listData" @change="getListData"></page>-->
 
-        <el-dialog title="详情" v-model="staffDialog" size="small">
+        <el-dialog title="详情" v-model="staffDialog" size="small" @close="staffStatus = 1">
 
             <div class="detail" v-if="staffStatus == 1">
                 <el-form label-width="120px">

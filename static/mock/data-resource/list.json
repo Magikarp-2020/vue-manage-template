@@ -1,0 +1,45 @@
+{
+  "status": 200,
+  "code": 200,
+  "data": [
+    {
+      "id": "appversion",
+      "pid": "0",
+      "resource_name": "APP版本管理",
+      "actions": {
+        "c": "添加",
+        "r": "移除"
+      }
+    },
+    {
+      "id": "dict-param",
+      "pid": "0",
+      "resource_name": "系统参数和字典管理",
+      "actions": "*"
+    },
+    {
+      "id": "emp:role",
+      "pid": "0",
+      "resource_name": "员工角色管理",
+      "actions": "*"
+    },
+    {
+      "id": "employee",
+      "pid": "0",
+      "resource_name": "员工管理",
+      "actions": "*"
+    },
+    {
+      "id": "member",
+      "pid": "0",
+      "resource_name": "会员管理",
+      "actions": "*"
+    },
+    {
+      "id": "member:log",
+      "pid": "0",
+      "resource_name": "会员日志管理",
+      "actions": "*"
+    }
+  ]
+}

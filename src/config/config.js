@@ -36,6 +36,8 @@ export const getRoot = () => {
     let ROOT = '';
     if (window.CHANGE_ROOT) {
         ROOT = window.CHANGE_ROOT;
+    } else if (process.env.NODE_ENV === 'development') {
+        ROOT = window.location.origin;
     } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         // 根据实际业务填写
         // ROOT = window.location.origin;
@@ -49,8 +51,13 @@ export const getRoot = () => {
 export const rootPath = (conf = {}) => {
     // 根据实际业务填写
     let ROOT = (conf.root || getRoot()) + window.location.pathname;
-    // const CONTEXT_NAME = conf.context_name || 'api';
-    const CONTEXT_NAME = conf.context_name || 'demo';
+    let CONTEXT_NAME = '';
+
+    if (process.env.NODE_ENV === 'development') {
+        CONTEXT_NAME = conf.context_name || 'api';
+    } else {
+        CONTEXT_NAME = conf.context_name || 'demo';
+    }
 
     return ROOT + CONTEXT_NAME;
 };
@@ -120,7 +127,7 @@ export const successHandler = (res) => {
 };
 
 export const errHandler = (res) => {
-
+    successHandler(res);
     // 没网
     /* if (!res.body) {
      MessageBox.alert('请确认网络是否连通，否则会造成当前工作丢失', '掉线了？', {
