@@ -7,8 +7,8 @@ class StaffService {
     getList(body) {
         return xhr({
             url: '/emp/list',
-            method: 'post',
-            mock: true,
+            method: 'get',
+            // mock: true,
             body
         });
     }

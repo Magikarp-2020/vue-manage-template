@@ -11,7 +11,8 @@
         "c",
         "u"
       ],
-      "any": "*"
+      "any": "*",
+      "staff": "*"
     },
     "face": "static/images/icon.png",
     "created_at": 1489570321,

@@ -12,7 +12,7 @@
                 <form class="login-form" @submit.prevent="login">
                     {{login.username}}
                     <input v-model="loginUsername" type="text" placeholder="用户名： root"/>
-                    <input v-model="loginPassword" type="password" placeholder="密码: 123456"/>
+                    <input v-model="loginPassword" type="password" placeholder="密码: 12345678"/>
                     <div class="captcha clearfix" v-if="needCaptcha">
                         <input v-model="loginCaptcha" type="text" placeholder="右侧验证码"/>
                         <div class="captcha-img-box">
@@ -66,6 +66,8 @@
                     this.$store.commit('setUserInfo', data.data);
                     this.$store.commit('dialogInit');
                     this.$router.push('/main/');
+                }, () => {
+
                 });
                 /*} else if (this.loginTime < 3) {
                  this.loginTime++;

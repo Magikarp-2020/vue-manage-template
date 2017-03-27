@@ -97,6 +97,14 @@ export default [{
             component: resolve => {
                 require(['views/human/staff'], resolve);
             }
+        }, {
+            path: 'role',
+            key: 'role',
+            text: '角色管理',
+            jurisdiction: true,
+            component: resolve => {
+                require(['views/human/role'], resolve);
+            }
         }
     ]
 }, {

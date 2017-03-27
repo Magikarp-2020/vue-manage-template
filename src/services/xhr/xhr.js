@@ -25,7 +25,6 @@ Vue.http.options.credentials = true;
  */
 export default ({url, body = {}, method = 'get', root, diyError = false, diyLoading = false, mock = false}) => {
     // method = 'get';
-    mock = true;
     if (mock) {
         url = '/static/mock' + url + '.json';
         method = 'get';
@@ -54,7 +53,6 @@ export default ({url, body = {}, method = 'get', root, diyError = false, diyLoad
             }
             // delete body.body;
         }
-        console.log(body);
         Vue.http[method](url, body).then((response) => {
             if (!diyLoading) {
                 store.commit('removeLoading', 'http');
