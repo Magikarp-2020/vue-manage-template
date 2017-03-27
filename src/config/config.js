@@ -50,7 +50,7 @@ export const getRoot = () => {
 export const rootPath = (conf = {}) => {
     // 根据实际业务填写
     let ROOT = (conf.root || getRoot()) + window.location.pathname;
-    const NAME_SPACE = conf.name_space || 'demo';
+    const NAME_SPACE = conf.name_space || 'static/mock';
 
     return ROOT + NAME_SPACE;
 };

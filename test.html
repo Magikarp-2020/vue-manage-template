@@ -2,14 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>canvas image processing | 镜心书社 </title>
 </head>
-<body>
-<h2>login</h2>
-    <form>
-        <input name="username" type="text" placeholder="username">
-        <input name="password" type="password" placeholder="password">
-        <button id="btn" type="submit" >login</button>
-    </form>
+<body style="background-color: black">
+<canvas id="canvas" style="display: block; margin: 0 auto;border: 1px solid #aaa;">
+    你的浏览器尚不支持canvas
+</canvas>
+
+<input type="range" name="" style="display: block;margin: 20px auto;width: 800px" id="scale-range"  min="0.5" max="3.0"  step="0.01" value="1.0" />
+
+<script type="text/javascript">
+    var canvas =document.getElementById("canvas");
+    var ctx=canvas.getContext("2d");
+    var slider=document.getElementById("scale-range");
+    var image= new Image();
+
+    window.onload= function(){
+
+        canvas.width=1152;
+        canvas.height=768;
+
+        var scale=slider.value;
+
+        image.src="static/images/test1.jpg";
+        image.onload=function(){
+
+            drawImageByScale(scale);
+
+            slider.onmousemove=function(){
+                scale=slider.value;
+                drawImageByScale(scale);
+            }
+
+
+
+            //ctx.drawImage(image,0,0,canvas.width,canvas.height);
+
+            // ctx.drawImage(image,600,200,400,400,0,0,400,400)
+
+        }
+
+    };
+
+    function drawImageByScale(scale){
+
+        var imageWidth=canvas.width*scale;
+        var imageHeight=canvas.width*scale;
+
+        // var sx=imageWidth/2-canvas.width/2;
+        // var sy=imageHeight/2-canvas.height/2;
+
+        var dx=(canvas.width-imageWidth)/2;
+        var dy=(canvas.height-imageHeight)/2;
+        ctx.clearRect(0 , 0,1152,canvas.height);
+        ctx.drawImage(image,dx,dy,imageWidth,imageHeight);
+
+    }
+
+</script>
 </body>
 </html>

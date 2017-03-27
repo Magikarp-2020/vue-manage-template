@@ -21,7 +21,7 @@
             </el-form>
         </div>
         <div class="detail" v-if="staffStatus == 2">
-            <staff-form v-model="staffDialogData"></staff-form>
+            <staff-form :value="staffDialogData" @input="staffDialogData = arguments[0]"></staff-form>
         </div>
 
         <div slot="footer" class="dialog-footer">

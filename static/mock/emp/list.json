@@ -9,13 +9,13 @@
     "list": [
       {
         "id": 1,
-        "name": "lichao",
+        "name": "name",
         "work_no": "7",
-        "real_name": "李超",
+        "real_name": "real_name",
         "role": "admin",
         "createdAt": "1490004392",
         "updateAt": "1490004392",
-        "mobile": "18215505077",
+        "mobile": "13999999999",
         "email": "294645832@qq.com",
         "dept": "前端大部门",
         "face": "http://cn.vuejs.org/images/logo.png",
@@ -23,9 +23,9 @@
       },
       {
         "id": 2,
-        "name": "lichao",
+        "name": "name",
         "work_no": "7",
-        "real_name": "李超",
+        "real_name": "real_name",
         "role": "admin",
         "createdAt": "1490004392",
         "updateAt": "1490004392",

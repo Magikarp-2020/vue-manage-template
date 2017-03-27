@@ -62,15 +62,16 @@
         },
         watch: {
             value: {
-                handler() {
-                    console.log('123123');
-                    this.data = util.cloneObject(this.value);
+                handler(value) {
+                    console.log('value change');
+                    this.data = util.cloneObject(value);
                 },
-                deep: true
+                deep: true,
+                immediate: true
             },
             data: {
                 handler() {
-                    console.log('123123');
+                    console.log('data change');
                     this.$emit('input', this.data);
                 },
                 deep: true
