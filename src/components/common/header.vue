@@ -3,7 +3,7 @@
         <img class="header-logo" :src="logo" alt="">
         <div class="header-right-box">
             <message class="header-right-item"></message>
-            <userInfo class="header-right-item"></userInfo>
+            <userInfo class="header-right-item" style="overflow: hidden;"></userInfo>
         </div>
     </div>
 </template>
