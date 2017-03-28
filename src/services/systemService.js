@@ -38,7 +38,7 @@ class SystemService {
         return xhr({
             url: '/data-resource/list',
             method: 'get',
-            mock: true,
+            // mock: true,
             body
         });
     }
