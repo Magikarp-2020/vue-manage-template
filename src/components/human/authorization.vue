@@ -115,7 +115,6 @@
                 try {
                     return _this.value && (_this.value instanceof Array ? JSON.parse(_this.value).length : Object.keys(JSON.parse(_this.value)).length);
                 } catch (e) {
-                    console.log('error');
                     return false;
                 }
             }
@@ -181,7 +180,6 @@
                         json[key] = data.list.join(',');
                     }
                 }
-                console.log('call change', this.valueLoad);
                 this.valueLoad || this.$emit('input', JSON.stringify(json));
             }
         }
