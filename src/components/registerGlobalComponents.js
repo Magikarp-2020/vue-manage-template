@@ -5,7 +5,7 @@ import Vue from 'vue';
 
 import limitBtn from './common/limitButton';
 import page from './common/page';
-import optionHeader from './common/optionHeader.vue';
+import optionHeader from './common/optionSpace.vue';
 
 Vue.component(limitBtn.name, limitBtn);
 Vue.component(page.name, page);

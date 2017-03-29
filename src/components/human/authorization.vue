@@ -144,7 +144,7 @@
             },
             emitChange() {
                 if (!Object.keys(this.output).length) {
-                    this.$emit('change', JSON.stringify(''));
+                    this.$emit('input', JSON.stringify(''));
                     return;
                 }
                 let json = {};
@@ -158,7 +158,7 @@
                         json[key] = data.list.join(',');
                     }
                 }
-                this.$emit('change', JSON.stringify(json));
+                this.$emit('input', JSON.stringify(json));
             }
         }
     };

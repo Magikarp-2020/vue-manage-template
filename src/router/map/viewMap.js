@@ -108,6 +108,34 @@ export default [{
         }
     ]
 }, {
+    path: 'settings',
+    key: 'settings',
+    text: '系统设置',
+    jurisdiction: true,
+    icon: 'el-icon-setting',
+    component: resolve => {
+        require(['views/router-bridge'], resolve);
+    },
+    children: [
+        {
+            path: 'param',
+            key: 'param',
+            text: '系统参数',
+            jurisdiction: true,
+            component: resolve => {
+                require(['views/settings/param'], resolve);
+            }
+        }, {
+            path: 'dict',
+            key: 'dict',
+            text: '系统字典',
+            jurisdiction: true,
+            component: resolve => {
+                require(['views/settings/dict'], resolve);
+            }
+        }
+    ]
+}, {
     path: '*',
     key: '404',
     text: '404',

@@ -43,6 +43,61 @@ class SystemService {
         });
     }
 
+    /**
+     *  获取系统参数列表
+     */
+    getParamList(body) {
+        return xhr({
+            url: '/param/list',
+            method: 'get',
+            body
+        });
+    }
+
+    /**
+     *  修改系统参数
+     */
+    updateParam(body) {
+        return xhr({
+            url: '/param/update',
+            method: 'post',
+            body
+        });
+    }
+
+    /**
+     *  获取系统字典列表
+     */
+    getDictList(body) {
+        return xhr({
+            url: '/dict/list',
+            method: 'get',
+            body
+        });
+    }
+
+    /**
+     *  添加字典
+     */
+    editDictItem(body) {
+        return xhr({
+            url: '/dict/addItem',
+            method: 'post',
+            body
+        });
+    }
+
+    /**
+     *  禁用/启用字典项
+     */
+    disableDictItem(body) {
+        return xhr({
+            url: '/dict/disableItem',
+            method: 'post',
+            body
+        });
+    }
+
 }
 
 export default new SystemService();

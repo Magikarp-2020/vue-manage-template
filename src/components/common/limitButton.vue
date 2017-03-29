@@ -28,6 +28,8 @@
      * props: type size icon limit
      * emit: click
      *
+     * 2017年3月28日15:55:36  修改   格式更换为  role::c,r,u,d
+     *
      */
     export default {
         name: 'limitBtn',
@@ -73,8 +75,8 @@
 
                 try {
                     if (typeof this.limit === 'string') {
-                        json.key = this.limit.split(':')[0];
-                        json.value = this.limit.split(':')[1].split(',');
+                        json.key = this.limit.split('::')[0];
+                        json.value = this.limit.split('::')[1].split(',');
                     }
                 } catch (e) {
                     throw new Error('权限传入格式错误！');

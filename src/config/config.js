@@ -38,6 +38,7 @@ export const getRoot = () => {
         ROOT = window.CHANGE_ROOT;
     } else if (process.env.NODE_ENV === 'development') {
         ROOT = window.location.origin;
+        // ROOT = '//dev.demo.local';
     } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         // 根据实际业务填写
         // ROOT = window.location.origin;
@@ -55,6 +56,7 @@ export const rootPath = (conf = {}) => {
 
     if (process.env.NODE_ENV === 'development') {
         CONTEXT_NAME = conf.context_name || 'api';
+        // CONTEXT_NAME = conf.context_name || 'demo';
     } else {
         CONTEXT_NAME = conf.context_name || 'demo';
     }

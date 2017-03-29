@@ -1,5 +1,10 @@
 <template>
     <div>
+        <option-space>
+            <span slot="right">
+                <limit-btn limit="emp:role::c" type="success" icon="plus" size="small" @click="addStaff">添加</limit-btn>
+            </span>
+        </option-space>
         <el-table
                 :data="listData"
                 style="width: 100%">
@@ -23,10 +28,12 @@
                 <template scope="scope">
                     <limit-btn limit="staff:r" size="small" @click="showDetail(scope.row)">详情/修改</limit-btn>
                     <!--<limit-btn limit="staff:password" size="small">重置密码</limit-btn>-->
-                    <limit-btn v-if="scope.row.disable" limit="staff:start" size="small"
+                    <limit-btn v-if="scope.row.disabled" limit="staff:start" size="small"
                                @click="staffDisabled(scope.row)" type="success">启用
                     </limit-btn>
-                    <limit-btn v-else limit="staff:stop" size="small" type="danger">禁用</limit-btn>
+                    <limit-btn v-else limit="staff:stop" @click="staffDisabled(scope.row)" size="small" type="danger">
+                        禁用
+                    </limit-btn>
                 </template>
             </el-table-column>
         </el-table>
@@ -56,8 +63,10 @@
                 </el-form>
             </div>
             <div class="detail" v-if="staffStatus == 2">
-                <staff-form :value="staffDialogData" ref="staffDialogForm"></staff-form>
+                <staff-form :value="staffDialogData" ref="staffDialogForm" :role-list="roleList"></staff-form>
             </div>
+
+            <p class="info">默认密码: <span>123456</span></p>
 
             <div slot="footer" class="dialog-footer">
                 <el-button @click="resetPassword" v-if="staffStatus == 1">重置密码</el-button>
@@ -69,11 +78,22 @@
                 <el-button type="primary" @click="staffDialog = false">关 闭</el-button>
             </div>
         </el-dialog>
+
+        <el-dialog title="添加员工" v-model="addForm.dialog" size="small" @close="addCancel">
+            <staff-form :value="addForm.data" ref="staffAddForm" :role-list="roleList"></staff-form>
+
+            <p class="info">默认密码: <span>123456</span></p>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="default" @click="addSuccess">确 定</el-button>
+                <el-button type="primary" @click="addDialog = false">关 闭</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
     import staffService from 'services/staffService';
+    import roleService from 'services/roleService';
     import util from 'utils/util';
     import staffForm from 'components/human/staff/form';
 
@@ -83,11 +103,19 @@
                 staffDialogData: {},
                 listData: [],
                 staffDialog: false,
-                staffStatus: 1
+                staffStatus: 1,
+                addForm: {
+                    dialog: false,
+                    data: {}
+                },
+                roleList: []
             };
         },
         created() {
             this.init();
+            roleService.list().then(({data}) => {
+                this.roleList = data.data;
+            });
         },
         methods: {
             init() {
@@ -106,7 +134,7 @@
                 if (!cancel) {
                     this.$refs['staffDialogForm'].validate((valid, data) => {
                         if (valid) {
-                            staffService.changeStaff(util.cloneObject(data)).then(({data}) => {
+                            staffService.changeStaff(data).then(({data}) => {
                                 this.$message.success('修改成功');
                                 this.staffStatus = 1;
                             }, () => {
@@ -151,10 +179,9 @@
             staffDisabled(item) {
                 staffService.staffDisabled({
                     id: item.id,
-                    disable: item.disable ? 0 : 1
+                    disable: item.disabled ? 0 : 1
                 }).then(({data}) => {
-                    console.log(data);
-                    item.disable = item.disable ? 0 : 1;
+                    item.disabled = item.disabled ? 0 : 1;
                 });
             },
             deleteStaff() {
@@ -169,6 +196,22 @@
                         this.$message.error('删除失败');
                     });
                 });
+            },
+            addStaff() {
+                this.addForm.dialog = true;
+            },
+            addSuccess() {
+                this.$refs['staffAddForm'].validate((valid, data) => {
+                    console.log(valid, data);
+                    if (valid) {
+                        staffService.addStaff(data).then(({data}) => {
+                            console.log(data);
+                        });
+                    }
+                });
+            },
+            addCancel() {
+                this.$refs['staffAddForm'].resetFields();
             }
         },
         components: {
@@ -178,7 +221,7 @@
 
 </script>
 
-<style lang="scss" rel="stylesheet/scss" scope>
+<style lang="scss" rel="stylesheet/scss" scoped>
     .detail {
         .user-face {
             $user-face-width: 100px;
@@ -189,6 +232,16 @@
         }
         .el-form-item__label {
             color: #828282;
+        }
+    }
+
+    .info {
+        color: #475669;
+        font-size: 14px;
+        padding-left: 50px;
+        span {
+            padding-left: 5px;
+            color: #324057;
         }
     }
 </style>

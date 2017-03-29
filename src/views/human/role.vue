@@ -1,9 +1,11 @@
 <template>
     <div>
-        <option-header>
-            <span slot="left"><el-button type="success" icon="plus" size="small">左方</el-button></span>
-            <span slot="right"><el-button type="success" icon="plus" size="small">右方</el-button></span>
-        </option-header>
+        <option-space>
+            <span slot="left"></span>
+            <span slot="right">
+                <limit-btn limit="emp:role::c" type="success" icon="plus" size="small" @click="addRole">添加</limit-btn>
+            </span>
+        </option-space>
         <el-table
                 :data="listData">
             <el-table-column
@@ -19,27 +21,42 @@
                 </template>
             </el-table-column>
             <el-table-column
-                    prop="name"
+                    prop="description"
                     label="备注">
             </el-table-column>
             <el-table-column
+                    width="220"
                     label="操作">
                 <template scope="scope">
-                    <el-button @click="edit(scope.row)" size="small">编辑</el-button>
-                    <el-button @click="deleteRole(scope.row)" size="small" type="danger">删除</el-button>
+                    <limit-btn limit="emp:role::u" @click="edit(scope.row)" size="small">编辑</limit-btn>
+                    <limit-btn limit="emp:role::d" @click="deleteRole(scope.row)" size="small" type="danger">删除</limit-btn>
                 </template>
             </el-table-column>
         </el-table>
 
         <el-dialog title="详情" v-model="editDialog" size="small">
-            {{editDialogData.role}}
-            <authorization :value="editDialogData.role"
-                           @change="authChange"
+            <authorization v-model="editDialogData.role"
                            :auth-list="authList">
             </authorization>
             <div slot="footer" class="dialog-footer">
                 <el-button type="default" @click="changeSuccess">确 定</el-button>
                 <el-button type="primary" @click="editDialog = false">关 闭</el-button>
+            </div>
+        </el-dialog>
+
+        <el-dialog title="添加角色" v-model="addDialog" size="small" @close="addCancel">
+            <el-form ref="addRoleForm" :model="addForm" label-width="120px" :rules="addFormRules">
+                <el-form-item label="角色名称" prop="name">
+                    <el-input v-model="addForm.name" placeholder="输入角色名称, 10字以内"></el-input>
+                </el-form-item>
+                <el-form-item label="角色描述" prop="description">
+                    <el-input v-model="addForm.description" type="textarea" :rows="3"
+                              placeholder="输入角色描述, 100字以内"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="default" @click="addSuccess">确 定</el-button>
+                <el-button type="primary" @click="addDialog = false">关 闭</el-button>
             </div>
         </el-dialog>
     </div>
@@ -60,7 +77,22 @@
                 listData: [],
                 editDialog: false,
                 editDialogData: {},
-                authList: {}
+                authList: {},
+                addDialog: false,
+                addForm: {
+                    name: '',
+                    description: ''
+                },
+                addFormRules: {
+                    name: [
+                        {required: 'true', message: '请输入角色名称'},
+                        {max: 10, message: '角色名称不可超过10个字符'}
+                    ],
+                    description: [
+                        {required: 'true', message: '请输入角色描述'},
+                        {max: 100, message: '角色描述不可超过100个字符'}
+                    ]
+                }
             };
         },
         methods: {
@@ -86,9 +118,6 @@
                     });
                 });
             },
-            authChange(auth) {
-                this.editDialogData.role = auth;
-            },
             changeSuccess() {
                 roleService.changeAuth({
                     id: this.editDialogData.id,
@@ -99,6 +128,28 @@
                 }, () => {
                     this.$message.error('修改失败');
                 });
+            },
+            addRole() {
+                this.addDialog = true;
+            },
+            addSuccess() {
+                this.$refs['addRoleForm'].validate(valid => {
+                    if (valid) {
+                        roleService.addRole({
+                            name: this.addForm.name,
+                            description: this.addForm.description
+                        }).then(({data}) => {
+                            this.$message.success('添加成功');
+                            this.addDialog = false;
+                            this.getList();
+                        });
+                    }
+                });
+            },
+            addCancel() {
+                this.addForm.name = '';
+                this.addForm.description = '';
+                setTimeout(() => this.$refs['addRoleForm'].resetFields(), 0);
             }
         },
         components: {

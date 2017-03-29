@@ -11,7 +11,6 @@ class RoleService {
         });
     }
 
-// /role/permissions
     changeAuth(body) {
         return xhr({
             url: '/role/permissions',
@@ -24,6 +23,15 @@ class RoleService {
         return xhr({
             //    /role/delete
             url: '/role/delete',
+            method: 'post',
+            body
+        });
+    }
+
+    addRole(body) {
+        // /role/add
+        return xhr({
+            url: '/role/add',
             method: 'post',
             body
         });

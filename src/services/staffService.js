@@ -32,7 +32,7 @@ class StaffService {
     staffDisabled(body) {
         return xhr({
             url: '/emp/disable',
-            methods: 'post',
+            method: 'post',
             body
         });
     }
@@ -40,7 +40,15 @@ class StaffService {
     deleteStaff(body) {
         return xhr({
             url: '/emp/delete',
-            methods: 'post',
+            method: 'post',
+            body
+        });
+    }
+
+    addStaff(body) {
+        return xhr({
+            url: '/emp/add',
+            method: 'post',
             body
         });
     }

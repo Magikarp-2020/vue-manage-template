@@ -81,7 +81,7 @@ vue-manage-template
 2. 用于前端项目开发的配置文件统一放在 `config `目录下
 3. 路由配置放于 `router` 目录下
    1. 路由最好按照菜单层级划分，对应的父级可利用`src/views/router-bridge.vue` 文件来过渡，详情可见[router菜单的分级](#router菜单的分级) 及 [通过路由配置生成菜单及权限管理](#通过路由配置生成菜单及权限管理)
-4. 与服务端通讯的接口放在 `servers` 文件目录下 **注意，一个js文件应当对应一个模块的接口，且不可在其余地方不经过services调用私自发起请求**
+4. 与服务端通讯的接口放在 `services` 文件目录下 **注意，一个js文件应当对应一个模块的接口，且不可在其余地方不经过services调用私自发起请求**
 5. 独立的验证方式放在`validate`下
 6. 工具类放在`util`下 也可另外引入如[Underscore](http://github.com/jashkenas/underscore/)的工具类
 7. 过滤器(filter)放在`filter` 下
@@ -310,7 +310,7 @@ router.afterEach(route => {
 
 > 例，操作商品时有对应的CRUD权限，这时，我们需要对用户对应的操作做出限制
 
-1.  操作按钮 disabled
+1. 操作按钮 disabled
 
    加入了新的组件  `limit-btn` 用于匹配及判断用户是否具有对应操作按钮的权限**注意：此功能需要先与后端协调好对应的权限名，详情可以看代码注释**
 
