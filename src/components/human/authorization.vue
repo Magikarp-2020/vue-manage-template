@@ -1,12 +1,14 @@
 <template>
-    <el-tree
-            :data="regions"
-            :props="props"
-            node-key="authId"
-            :default-checked-keys="defaultChecked"
-            @check-change="checkChange"
-            show-checkbox>
-    </el-tree>
+    <div>
+        <el-tree ref="tree"
+                 :data="regions"
+                 :props="props"
+                 node-key="authId"
+                 :default-checked-keys="defaultChecked"
+                 @check-change="checkChange"
+                 show-checkbox>
+        </el-tree>
+    </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -19,12 +21,13 @@
                     label: 'resource_name',
                     children: 'children'
                 },
-                output: {}
+                output: {},
+                valueLoad: false
             };
         },
         props: {
             value: {
-                type: String,
+                type: [String],
                 default: ''
             },
             authList: {
@@ -37,37 +40,48 @@
         watch: {
             value: {
                 handler(value) {
+                    this.valueLoad = true;
+                    let json = {};
+                    let checkedArr = [];
+                    this.defaultChecked = [];
                     if (typeof value === 'string') {
-                        let json = {};
-                        let checkedArr = [];
                         try {
                             json = JSON.parse(value);
                         } catch (e) {
                         }
-                        for (let key in json) {
-                            // 设置 output json 的数据
-
-                            if (json[key] === '*') {
-                                checkedArr.push(key);
-//                                this.output[key].list=this.regions
-                                this.regions.forEach(regionsItem => {
-                                    if (regionsItem.id === key) {
-                                        if (regionsItem.children && regionsItem.children.length) {
-                                            regionsItem.children.forEach(childItem => {
-                                                this.setOutput(childItem, true);
-                                            });
-                                        } else {
-                                            this.setOutput(regionsItem, true);
-                                        }
+                    } else {
+                        json = util.cloneObject(value);
+                    }
+                    for (let key in json) {
+                        // 设置 output json 的数据
+                        if (json[key] === '*' || (json[key].length === 1 && json[key][0] === '*')) {
+                            checkedArr.push(key);
+                            this.regions.forEach(regionsItem => {
+                                if (regionsItem.id === key) {
+                                    if (regionsItem.children && regionsItem.children.length) {
+                                        regionsItem.children.forEach(childItem => {
+                                            this.setOutput(childItem, true);
+                                        });
+                                    } else {
+                                        this.setOutput(regionsItem, true);
                                     }
-                                });
-                            } else {
-                                json[key].split(',').forEach(value => {
-                                    checkedArr.push(`${key}_${value}`);
-                                });
-                            }
+                                }
+                            });
+                        } else {
+                            json[key].forEach(value => {
+                                checkedArr.push(`${key}_${value}`);
+                            });
                         }
-                        this.defaultChecked = checkedArr;
+                    }
+                    this.defaultChecked = checkedArr;
+                    try {
+                        // 第一次在渲染, 很慢 未获取到元素
+                        this.$refs['tree'].setCheckedKeys(checkedArr);
+                        setTimeout(() => {
+                            this.valueLoad = false;
+                            this.emitChange();
+                        }, 100);
+                    } catch (e) {
                     }
                 },
                 immediate: true
@@ -95,6 +109,15 @@
                     arr.push(json);
                 });
                 return arr;
+            },
+            showTree() {
+                let _this = this;
+                try {
+                    return _this.value && (_this.value instanceof Array ? JSON.parse(_this.value).length : Object.keys(JSON.parse(_this.value)).length);
+                } catch (e) {
+                    console.log('error');
+                    return false;
+                }
             }
         },
         methods: {
@@ -115,7 +138,7 @@
                     if (checked) {
                         this.$set(this.output, data.id, '*');
                     } else {
-                        delete this.output[data.id];
+                        this.$delete(this.output, data.id);
                     }
                 } else if (checked) {
                     if (this.output[data.name]) {
@@ -138,13 +161,13 @@
                     });
                     this.output[data.name].list = newArr;
                     if (!this.output[data.name].list.length) {
-                        delete this.output[data.name];
+                        this.$delete(this.output, data.name);
                     }
                 }
             },
             emitChange() {
                 if (!Object.keys(this.output).length) {
-                    this.$emit('input', JSON.stringify(''));
+                    this.valueLoad || this.$emit('input', JSON.stringify(''));
                     return;
                 }
                 let json = {};
@@ -158,7 +181,8 @@
                         json[key] = data.list.join(',');
                     }
                 }
-                this.$emit('input', JSON.stringify(json));
+                console.log('call change', this.valueLoad);
+                this.valueLoad || this.$emit('input', JSON.stringify(json));
             }
         }
     };

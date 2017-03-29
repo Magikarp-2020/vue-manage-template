@@ -36,6 +36,14 @@ class RoleService {
             body
         });
     }
+
+    getRolePermissions(body) {
+        return xhr({
+            url: '/role/permissions',
+            method: 'get',
+            body
+        });
+    }
 }
 
 export default new RoleService();

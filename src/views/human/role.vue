@@ -29,7 +29,8 @@
                     label="操作">
                 <template scope="scope">
                     <limit-btn limit="emp:role::u" @click="edit(scope.row)" size="small">编辑</limit-btn>
-                    <limit-btn limit="emp:role::d" @click="deleteRole(scope.row)" size="small" type="danger">删除</limit-btn>
+                    <limit-btn limit="emp:role::d" @click="deleteRole(scope.row)" size="small" type="danger">删除
+                    </limit-btn>
                 </template>
             </el-table-column>
         </el-table>
@@ -63,6 +64,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+    import util from 'utils/util';
     import roleService from 'services/roleService';
     import systemService from 'services/systemService';
     import authorization from 'components/human/authorization';
@@ -107,8 +109,14 @@
                 });
             },
             edit(item) {
+                this.$delete(this.editDialogData, 'role');
                 this.editDialog = true;
-                this.editDialogData = item;
+                this.editDialogData = util.cloneObject(item);
+                roleService.getRolePermissions({
+                    id: item.id
+                }).then(({data}) => {
+                    this.$set(this.editDialogData, 'role', JSON.stringify(data.data.haveResources));
+                });
             },
             deleteRole({id, name}) {
                 this.$confirm(`是否删除角色 [ ${name} ] ? 删除后不可恢复`).then(() => {
@@ -131,6 +139,7 @@
             },
             addRole() {
                 this.addDialog = true;
+//                /role/permissions
             },
             addSuccess() {
                 this.$refs['addRoleForm'].validate(valid => {

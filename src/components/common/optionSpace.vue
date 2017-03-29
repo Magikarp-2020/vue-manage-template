@@ -3,27 +3,26 @@
         <div class="clearfix">
             <div class="option-space--left">
                 <slot name="left"></slot>
-                <el-button @click="handlerMore">显示更多搜索选项</el-button>
+                <el-button @click="handlerMore" v-if="more">显示更多搜索选项</el-button>
             </div>
             <div class="option-space--right">
                 <slot name="right"></slot>
             </div>
         </div>
-        <transition>
-            <div class="option-space--more" :class="{'option-space--more-active': showMore}">
-                <div class="option-space--more-wrapper">
-                    <el-form :label-width="itemLabelWidth" :model="model">
-                        <el-row :gutter="itemLabelGutter">
-                            <slot name="more"></slot>
-                        </el-row>
-                    </el-form>
-                </div>
+        <div class="option-space--more" :class="{'option-space--more-active': showMore}" v-if="more">
+            <div class="option-space--more-wrapper">
+                <el-form :label-width="itemLabelWidth" :model="model">
+                    <el-row :gutter="itemLabelGutter">
+                        <slot name="more"></slot>
+                    </el-row>
+                </el-form>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
+    import $ from 'assets/jquery-vendor';
     export default {
         name: 'optionSpace',
         props: {
@@ -54,13 +53,15 @@
         methods: {
             handlerMore() {
                 this.showMore = !this.showMore;
+                let el = $(this.$el);
+                el.find('.option-space--more').stop(true);
                 if (this.showMore) {
-                    this.$el.querySelector('.option-space--more').style.height = this.$el.querySelector('.option-space--more-wrapper').clientHeight + 'px';
-                    setTimeout(() => {
-                        this.$el.querySelector('.option-space--more').style.height = 'auto';
-                    }, 500);
+                    el.find('.option-space--more').animate({height: el.find('.option-space--more-wrapper').height()}, function () {
+                        el.find('.option-space--more').height(el.find('.option-space--more-wrapper').height());
+                    });
                 } else {
-                    this.$el.querySelector('.option-space--more').style.height = 0;
+                    el.find('.option-space--more').animate({height: 0}, function () {
+                    });
                 }
             }
         }
