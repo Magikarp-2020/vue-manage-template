@@ -3,6 +3,11 @@
 @import "theme";
 // @import url(../../../static/font/iconfont.css);
 
+// 引入组件的css
+@import "componentsStyles/optionSpace";
+
+
+
 html, body {
   width: 100%;
   height: 100%;

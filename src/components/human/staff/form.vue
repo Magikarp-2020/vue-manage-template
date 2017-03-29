@@ -9,7 +9,11 @@
             <img v-if="data.face" :src="data.face" class="avatar">
             <i v-else="" class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-form-item label="工号" prop="work_no">
+        <el-form-item label="工号" prop="work_no" v-if="value.work_no">
+            {{value.work_no}}
+        </el-form-item>
+
+        <el-form-item label="工号" prop="work_no" v-else>
             <el-input type="text" v-model="data.work_no" placeholder="只能包含数字、字母、下划线，长度在4-16位之间"></el-input>
         </el-form-item>
         <el-form-item label="真实姓名" prop="real_name">
@@ -91,7 +95,11 @@
             value: {
                 handler(value) {
                     this.data = util.cloneObject(value);
-                    this.checkedRoles = this.data.role.split(',');
+                    try {
+                        this.checkedRoles = this.data.role.split(',');
+                    } catch (e) {
+                        this.checkedRoles = [];
+                    }
                     this.handleCheckedRolesChange(this.checkedRoles);
                 },
                 deep: true,
@@ -103,7 +111,11 @@
                 return this.$refs['staffDialogForm'].resetFields();
             },
             validate(cb) {
-                return this.$refs['staffDialogForm'].validate(value => cb(value, util.cloneObject(this.data)));
+                return this.$refs['staffDialogForm'].validate(value => {
+                    let output = util.cloneObject(this.data);
+                    output.role = this.checkedRoles.join(',');
+                    cb(value, output);
+                });
             },
             handleCheckAllChange(checked) {
                 if (this.roleCheckAll.checked) {

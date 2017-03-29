@@ -1,9 +1,26 @@
 <template>
     <div>
-        <option-space>
+        <option-space :more="true" item-label-width="60px" :model="demoForm">
             <span slot="right">
-                <limit-btn limit="emp:role::c" type="success" icon="plus" size="small" @click="addStaff">添加</limit-btn>
+                <limit-btn limit="emp:role::c" type="success" icon="plus" size="" @click="addStaff">添加</limit-btn>
             </span>
+            <div slot="more">
+                <option-space-item label="姓名" prop="name" :rules="[{required: true, message: '请填写姓名'}]">
+                    <el-input type="text" v-model="demoForm.name"></el-input>
+                </option-space-item>
+                <option-space-item label="姓名">
+                    <el-input type="text"></el-input>
+                </option-space-item>
+                <option-space-item label="姓名">
+                    <el-input type="text"></el-input>
+                </option-space-item>
+                <option-space-item label="姓名">
+                    <el-input type="text"></el-input>
+                </option-space-item>
+                <option-space-item label="姓名">
+                    <el-input type="text"></el-input>
+                </option-space-item>
+            </div>
         </option-space>
         <el-table
                 :data="listData"
@@ -85,7 +102,7 @@
             <p class="info">默认密码: <span>123456</span></p>
             <div slot="footer" class="dialog-footer">
                 <el-button type="default" @click="addSuccess">确 定</el-button>
-                <el-button type="primary" @click="addDialog = false">关 闭</el-button>
+                <el-button type="primary" @click="addForm.dialog = false">关 闭</el-button>
             </div>
         </el-dialog>
     </div>
@@ -107,6 +124,9 @@
                 addForm: {
                     dialog: false,
                     data: {}
+                },
+                demoForm: {
+                    name: ''
                 },
                 roleList: []
             };
@@ -132,11 +152,12 @@
             },
             staffChangeSubmit(cancel) {
                 if (!cancel) {
-                    this.$refs['staffDialogForm'].validate((valid, data) => {
+                    this.$refs['staffDialogForm'].validate((valid, item) => {
                         if (valid) {
-                            staffService.changeStaff(data).then(({data}) => {
+                            staffService.changeStaff(item).then(({data}) => {
                                 this.$message.success('修改成功');
                                 this.staffStatus = 1;
+                                this.staffDialogData = item;
                             }, () => {
                                 this.$message.error('修改失败');
                             });
@@ -205,7 +226,9 @@
                     console.log(valid, data);
                     if (valid) {
                         staffService.addStaff(data).then(({data}) => {
-                            console.log(data);
+                            this.$message.success('添加成功');
+                            this.addForm.dialog = false;
+                            this.getListData();
                         });
                     }
                 });
