@@ -49,7 +49,7 @@ header.header {
       }
       i {
         line-height: $header-height - 8;
-        height:$header-height - 8;
+        height: $header-height - 8;
         font-size: 24px;
         display: inline-block;
       }
@@ -135,15 +135,29 @@ aside.aside {
   padding: $header-height 0 0 $aside-width;
   transition: all 0.4s;
   .breadcrumb {
-    height: $breadcrumb-height;
+    //height: $breadcrumb-height;
     width: 100%;
     background: #ffffff;
     padding-left: 8px;
     color: #1F2D3D;
     border-bottom: 2px solid #d8d8d8;
-    span {
-      line-height: $breadcrumb-height;
+    min-height: $breadcrumb-height;
+
+    .header-crumbs {
+      &-left {
+        float: left;
+        span {
+          line-height: $breadcrumb-height;
+        }
+      }
+      &-right {
+        float: right;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-right: 10px;
+      }
     }
+
   }
   #contentMain {
     padding: 10px;

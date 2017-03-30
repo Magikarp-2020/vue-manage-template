@@ -1,10 +1,19 @@
 <template>
-    <div class="header-crumbs">
+    <div class="header-crumbs clearfix">
         <!--<span v-for="(c,index) in crumbs" :class="{active: index==crumbs.length-1}">{{c}}<span
                 v-if="crumbs.length > 1 && index!=crumbs.length-1 && crumbs[0].length">/</span></span>-->
-        <el-breadcrumb separator="/">
-            <el-breadcrumb-item v-for="(c,index) in crumbs">{{c}}</el-breadcrumb-item>
-        </el-breadcrumb>
+        <div class="header-crumbs-left">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item v-for="(c,index) in crumbs">{{c}}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="header-crumbs-right">
+            <!--{{buttonList}}-->
+            <!--<el-button v-for="button in buttonList" size="small" :icon="button.icon" :type="button.type"
+                       @click="button.click">
+                {{button.text}}
+            </el-button>-->
+        </div>
     </div>
 </template>
 
@@ -32,6 +41,9 @@
                 }
 
                 return crumb;
+            },
+            buttonList() {
+                return this.$store.state.components.breadcrumb.buttonList;
             }
         }
     };

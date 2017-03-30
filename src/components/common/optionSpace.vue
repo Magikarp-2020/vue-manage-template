@@ -3,7 +3,7 @@
         <div class="clearfix">
             <div class="option-space--left">
                 <slot name="left"></slot>
-                <el-button @click="handlerMore" v-if="more">显示更多搜索选项</el-button>
+                <el-button @click="handlerMore" v-if="more">高级查询</el-button>
             </div>
             <div class="option-space--right">
                 <slot name="right"></slot>
@@ -32,7 +32,7 @@
             },
             itemLabelWidth: {
                 type: String,
-                default: ''
+                default: '80px'
             },
             itemLabelGutter: {
                 type: Number,
@@ -57,7 +57,7 @@
                 el.find('.option-space--more').stop(true);
                 if (this.showMore) {
                     el.find('.option-space--more').animate({height: el.find('.option-space--more-wrapper').height()}, function () {
-                        el.find('.option-space--more').height(el.find('.option-space--more-wrapper').height());
+                        el.find('.option-space--more').height('inherit');
                     });
                 } else {
                     el.find('.option-space--more').animate({height: 0}, function () {

@@ -3,16 +3,19 @@
  */
 export default {
     state: {
-        picturePopupShow: false,
-        picturePopupData: {}
+        breadcrumb: {
+            /**
+             * [{text: 'text', icon: 'icon', click: [[fun]]}]
+             */
+            buttonList: []
+        }
     },
-    getter: {},
+    getter: {
+    },
     mutations: {
-        picturePopupShow(state, data) {
-            state.picturePopupShow = true;
-        },
-        picturePopupHide(state, data) {
-            state.picturePopupShow = false;
+        setBreadcrumbButton(state, list) {
+            console.log(list);
+            state.breadcrumb.buttonList = list;
         }
     }
 };

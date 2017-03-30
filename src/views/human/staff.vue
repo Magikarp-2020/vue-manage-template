@@ -1,24 +1,15 @@
 <template>
     <div>
-        <option-space :more="true" item-label-width="60px" :model="demoForm">
+        <option-space :more="false" item-label-width="80px" :model="demoForm">
+            <span slot="left">
+                <el-input type="text" v-model="search.key" placeholder="输入手机号,用户名,工号搜索"></el-input>
+                <el-button type="" @click="getListData(search.key)">查询</el-button></span>
             <span slot="right">
                 <limit-btn limit="emp:role::c" type="success" icon="plus" size="" @click="addStaff">添加</limit-btn>
             </span>
             <div slot="more">
-                <option-space-item label="姓名" prop="name" :rules="[{required: true, message: '请填写姓名'}]">
+                <option-space-item label="姓名姓名" prop="name" :rules="[{required: true, message: '请填写姓名'}]">
                     <el-input type="text" v-model="demoForm.name"></el-input>
-                </option-space-item>
-                <option-space-item label="姓名">
-                    <el-input type="text"></el-input>
-                </option-space-item>
-                <option-space-item label="姓名">
-                    <el-input type="text"></el-input>
-                </option-space-item>
-                <option-space-item label="姓名">
-                    <el-input type="text"></el-input>
-                </option-space-item>
-                <option-space-item label="姓名">
-                    <el-input type="text"></el-input>
                 </option-space-item>
             </div>
         </option-space>
@@ -121,6 +112,9 @@
                 listData: [],
                 staffDialog: false,
                 staffStatus: 1,
+                search: {
+                    key: ''
+                },
                 addForm: {
                     dialog: false,
                     data: {}
@@ -136,13 +130,16 @@
             roleService.list().then(({data}) => {
                 this.roleList = data.data;
             });
+            /*this.$store.commit('setBreadcrumbButton', [
+                {text: '添加', click: this.addStaff, type: 'success', icon: 'plus'}
+            ]);*/
         },
         methods: {
             init() {
                 this.getListData(1);
             },
-            getListData(page = this.listData.current_page) {
-                staffService.getList({page: page}).then(({data}) => {
+            getListData(username) {
+                staffService.getList({username}).then(({data}) => {
                     this.listData = data.data;
                 });
             },

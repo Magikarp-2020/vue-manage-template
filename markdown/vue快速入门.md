@@ -127,6 +127,7 @@ $ cnpm uninstall --save modelName
 
 1. 如果是 安装模块后报错，建议删除模块后重新安装
 2. 启动项目是报错`Module not found: Error: Cannot resolve module 'xxx' in F:\wamp64\www\xxx` 是更新后没有安装模块，运行`cnpm install` 并且重启项目
+3. `Error: listen EADDRINUSE :::xxxx`  端口占用, 更改`config/index.js:21`  `port `  选项
 
 
 
@@ -166,7 +167,7 @@ $ npm run build
 
 `assetsPublicPath: ''`更改为对应路径即可，demo:
 
-```
+```vue
 config/index.js:10:
 	assetsPublicPath: ''
 dist/index
@@ -244,6 +245,10 @@ setting -> Languages & Frameworks -> javascript
 ```
 
 
+
+### hello-word
+
+> markdown/template/hello-word
 
 ### v-on & v-bind
 

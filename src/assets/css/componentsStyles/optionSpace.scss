@@ -2,6 +2,9 @@
   padding: 0 10px 10px;
   &--left {
     float: left;
+    .el-input{
+      width:auto;
+    }
   }
   &--right {
     float: right;
