@@ -6,6 +6,14 @@
 
 
 
+## 什么是Vue
+
+Vue.js（读音 /vjuː/，类似于 **view**） 是一套构建用户界面的**渐进式框架**。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与[单文件组件](https://cn.vuejs.org/v2/guide/single-file-components.html)和 [Vue 生态系统支持的库](https://github.com/vuejs/awesome-vue#libraries--plugins)结合使用时，Vue 也完全能够为复杂的单页应用程序提供驱动。
+
+> 什么是渐进式框架?    不做多余的事, 在需要的时候调用需要的东西
+
+
+
 ## vue 的特点
 
 
@@ -24,7 +32,9 @@
 
 ### 组件化
 
-页面上小到一个按钮都可以是一个单独的文件.vue，这些小组件直接可以像乐高积木一样通过互相引用而组装起来
+组件（Component）是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码。在较高层面上，组件是自定义元素， Vue.js 的编译器为它添加特殊功能。在有些情况下，组件也可以是原生 HTML 元素的形式，以 js 特性扩展。**几乎所有页面都可以抽象为一个组件树搭建起来**
+
+> 对于自定义标签名，Vue.js 不强制要求遵循 [W3C规则](https://www.w3.org/TR/custom-elements/#concepts) （小写，并且包含一个短杠），尽管遵循这个规则比较好。
 
 ![](./images/components.png)
 
@@ -104,81 +114,14 @@ $ npm install
 $ npm run dev
 ```
 
+## 例子
 
+### helloworld
+> demo/helloworld.html
 
-## 项目运行
+### 双向绑定
 
-### 项目安装
-
-项目导出/创建后，第一件事情就是安装，建议每次更新后为避免不必要报错 cnpm install 一次
-
-```shell
-# 安装所有依赖
-$ cnpm install
-# 给项目安装模块
-$ cnpm install --save modelName1 modelName2
-# 删除模块（不删除 package.json 中保存的name）
-$ cnpm uninstall modelName
-# 删除模块，同时删除 package.json 中保存的 name 
-$ cnpm uninstall --save modelName
-```
-
-#### 启动时报错
-
-1. 如果是 安装模块后报错，建议删除模块后重新安装
-2. 启动项目是报错`Module not found: Error: Cannot resolve module 'xxx' in F:\wamp64\www\xxx` 是更新后没有安装模块，运行`cnpm install` 并且重启项目
-3. `Error: listen EADDRINUSE :::xxxx`  端口占用, 更改`config/index.js:21`  `port `  选项
-
-
-
-### 项目运行
-
-#### dev  开发环境
-
-```shell
-$ npm run dev
-```
-
-> 扩展：在dev环境时 全局 process.env.NODE_ENV 为 `config/dev.env.js:5` 中的值
-
-##### 更改监听端口
-
-`config/index.js:21`   `port: 8085,`  更改即可
-
-dev 环境下webpack 生成的文件并不会以实体存在，而是驻留在内存中
-
-#### build 线上环境
-
-```shell
-$ npm run build
-```
-
-> 扩展：在dev环境时 全局 process.env.NODE_ENV 为 `config/prod.env.js:5` 中的值
->
-> 
-
-##### 去除build 后文件hash值
-
-在 build 运行时会首先清空 `dist `目录下的所有文件并且生成新的带hash值的文件，这是为了防止缓存，如不喜欢可以再`build/webpack.prod.conf.js:18` 中修改
-
-##### build 后 index 静态资源引用路径
-
-> config/index.js:10
-
-`assetsPublicPath: ''`更改为对应路径即可，demo:
-
-```vue
-config/index.js:10:
-	assetsPublicPath: ''
-dist/index
-	<script type=text/javascript src=static/js/manifest.15c5e6c9ce9c68475971.js></script>
-	
-config/index.js:10:
-	assetsPublicPath: 'http://www.baidu.com/'
-dist/index
-	<script type=text/javascript src=http://www.baidu.com/static/js/manifest.6ba3a6a342be0665f4af.js></script>
-```
-
+> demo/双向绑定.html
 
 
 ## 推荐编辑器
@@ -221,7 +164,14 @@ setting -> Languages & Frameworks -> javascript
 ```
 
 
+
 ## vue 语法
+
+https://cn.vuejs.org/v2/guide/syntax.html
+
+
+
+>
 
 ### 默认单页面结构
 
@@ -324,6 +274,33 @@ setting -> Languages & Frameworks -> javascript
 > 建议前往官网查看 链接[vueJs](http://cn.vueJs.org)
 
 
+
+#### 单页组件
+
+> 点击[这里](https://cn.vuejs.org/v2/guide/single-file-components.html)查看官方文档
+
+在很多Vue项目中，我们使用 `Vue.component` 来定义全局组件，紧接着用 `new Vue({ el: '#container '})` 在每个页面内指定一个容器元素。
+
+这种方式在很多中小规模的项目中运作的很好，在这些项目里 JavaScript 只被用来加强特定的视图。但当在更复杂的项目中，或者你的前端完全由 JavaScript 驱动的时候，下面这些缺点将变得非常明显：
+
+- **全局定义(Global definitions)** 强制要求每个 component 中的命名不得重复
+- **字符串模板(String templates)** 缺乏语法高亮，在 HTML 有多行的时候，需要用到丑陋的 `\`
+- **不支持CSS(No CSS support)** 意味着当 HTML 和 JavaScript 组件化时，CSS 明显被遗漏
+- **没有构建步骤(No build step)** 限制只能使用 HTML 和 ES5 JavaScript, 而不能使用预处理器，如 Pug (formerly Jade) 和 Babel
+
+文件扩展名为 `.vue` 的 **single-file components(单文件组件)** 为以上所有问题提供了解决方法，并且还可以使用 Webpack 或 Browserify 等构建工具。
+
+这是一个文件名为 `Hello.vue` 的简单实例：
+
+![](https://cn.vuejs.org/images/vue-component.png)
+
+
+
+现在我们获得：
+
+- [完整语法高亮](https://github.com/vuejs/awesome-vue#syntax-highlighting)
+- [CommonJS 模块](https://webpack.github.io/docs/commonjs.html)
+- [组件化的 CSS](https://github.com/vuejs/vue-loader/blob/master/docs/en/features/scoped-css.md)
 
 #### data
 
@@ -513,6 +490,86 @@ data: {
 
 
 其余 vue-router vuex 自行研究，太多了撸不完
+
+vuex 点击[这里](https://segmentfault.com/a/1190000008861913)
+
+### 创建一个组件
+
+
+
+## 项目运行
+
+### 项目安装
+
+项目导出/创建后，第一件事情就是安装，建议每次更新后为避免不必要报错 cnpm install 一次
+
+```shell
+# 安装所有依赖
+$ cnpm install
+# 给项目安装模块
+$ cnpm install --save modelName1 modelName2
+# 删除模块（不删除 package.json 中保存的name）
+$ cnpm uninstall modelName
+# 删除模块，同时删除 package.json 中保存的 name 
+$ cnpm uninstall --save modelName
+```
+
+#### 启动时报错
+
+1. 如果是 安装模块后报错，建议删除模块后重新安装
+2. 启动项目是报错`Module not found: Error: Cannot resolve module 'xxx' in F:\wamp64\www\xxx` 是更新后没有安装模块，运行`cnpm install` 并且重启项目
+3. `Error: listen EADDRINUSE :::xxxx`  端口占用, 更改`config/index.js:21`  `port `  选项
+
+
+
+### 项目运行
+
+#### dev  开发环境
+
+```shell
+$ npm run dev
+```
+
+> 扩展：在dev环境时 全局 process.env.NODE_ENV 为 `config/dev.env.js:5` 中的值
+
+##### 更改监听端口
+
+`config/index.js:21`   `port: 8085,`  更改即可
+
+dev 环境下webpack 生成的文件并不会以实体存在，而是驻留在内存中
+
+#### build 线上环境
+
+```shell
+$ npm run build
+```
+
+> 扩展：在dev环境时 全局 process.env.NODE_ENV 为 `config/prod.env.js:5` 中的值
+>
+> 
+
+##### 去除build 后文件hash值
+
+在 build 运行时会首先清空 `dist `目录下的所有文件并且生成新的带hash值的文件，这是为了防止缓存，如不喜欢可以再`build/webpack.prod.conf.js:18` 中修改
+
+##### build 后 index 静态资源引用路径
+
+> config/index.js:10
+
+`assetsPublicPath: ''`更改为对应路径即可，demo:
+
+```vue
+config/index.js:10:
+	assetsPublicPath: ''
+dist/index
+	<script type=text/javascript src=static/js/manifest.15c5e6c9ce9c68475971.js></script>
+	
+config/index.js:10:
+	assetsPublicPath: 'http://www.baidu.com/'
+dist/index
+	<script type=text/javascript src=http://www.baidu.com/static/js/manifest.6ba3a6a342be0665f4af.js></script>
+```
+
 
 
 

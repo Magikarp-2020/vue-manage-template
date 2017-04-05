@@ -38,6 +38,7 @@ export default {
                     loadingList[index].close();
                 }
             }
+            // window.resize();
         }
     }
 };

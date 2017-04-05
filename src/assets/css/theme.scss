@@ -135,25 +135,28 @@ aside.aside {
   padding: $header-height 0 0 $aside-width;
   transition: all 0.4s;
   .breadcrumb {
-    //height: $breadcrumb-height;
+    min-height: $breadcrumb-height;
     width: 100%;
-    background: #ffffff;
+    background: #ffffff !important;
     padding-left: 8px;
     color: #1F2D3D;
     border-bottom: 2px solid #d8d8d8;
-    min-height: $breadcrumb-height;
 
     .header-crumbs {
+      //flex: 1;
+      //display: flex;
       &-left {
+        //flex: 1;
         float: left;
         span {
           line-height: $breadcrumb-height;
         }
       }
       &-right {
+        //flex: 0;
         float: right;
-        padding-top: 4px;
-        padding-bottom: 4px;
+        padding-top:4px;
+        padding-bottom:4px;
         padding-right: 10px;
       }
     }

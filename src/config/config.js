@@ -39,10 +39,11 @@ export const getRoot = () => {
     } else if (process.env.NODE_ENV === 'development') {
         ROOT = window.location.origin;
         // ROOT = '//dev.demo.local';
-    } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ||
+        window.location.hostname.indexOf('192.168.') > -1) {
         // 根据实际业务填写
         // ROOT = window.location.origin;
-        ROOT = '//dev.demo.local';
+        ROOT = '//dev.base.local';
     } else {
         ROOT = window.location.origin;
     }
@@ -51,13 +52,15 @@ export const getRoot = () => {
 
 export const rootPath = (conf = {}) => {
     // 根据实际业务填写
-    let ROOT = (conf.root || getRoot()) + window.location.pathname;
+    let ROOT = '';
     let CONTEXT_NAME = '';
 
     if (process.env.NODE_ENV === 'development') {
+        ROOT = (conf.root || getRoot()) + window.location.pathname;
         CONTEXT_NAME = conf.context_name || 'api';
         // CONTEXT_NAME = conf.context_name || 'demo';
     } else {
+        ROOT = (conf.root || getRoot()) + '/';
         CONTEXT_NAME = conf.context_name || 'demo';
     }
 

@@ -1,10 +1,11 @@
 <template>
     <div>
-        <option-space :more="false" item-label-width="80px" :model="demoForm">
+        <option-space :more="true" item-label-width="80px" :model="demoForm">
             <span slot="left">
-                <el-input type="text" v-model="search.key" placeholder="输入手机号,用户名,工号搜索"></el-input>
-                <el-button type="" @click="getListData(search.key)">查询</el-button></span>
+                <el-input type="text"></el-input>
+                <el-button type="primary">查询</el-button></span>
             <span slot="right">
+                <limit-btn limit="emp:role::c" type="success" icon="plus" size="" @click="addStaff">添加</limit-btn>
                 <limit-btn limit="emp:role::c" type="success" icon="plus" size="" @click="addStaff">添加</limit-btn>
             </span>
             <div slot="more">
@@ -32,14 +33,15 @@
                     label="手机号">
             </el-table-column>
             <el-table-column
-                    label="操作">
+                    label="操作"
+                    align="right">
                 <template scope="scope">
-                    <limit-btn limit="staff:r" size="small" @click="showDetail(scope.row)">详情/修改</limit-btn>
+                    <limit-btn limit="staff:r" size="small" @click="showDetail(scope.row)" type="text">详情/修改</limit-btn>
                     <!--<limit-btn limit="staff:password" size="small">重置密码</limit-btn>-->
                     <limit-btn v-if="scope.row.disabled" limit="staff:start" size="small"
                                @click="staffDisabled(scope.row)" type="success">启用
                     </limit-btn>
-                    <limit-btn v-else limit="staff:stop" @click="staffDisabled(scope.row)" size="small" type="danger">
+                    <limit-btn v-else limit="staff:stop" @click="staffDisabled(scope.row)" size="small" type="text">
                         禁用
                     </limit-btn>
                 </template>
@@ -112,9 +114,6 @@
                 listData: [],
                 staffDialog: false,
                 staffStatus: 1,
-                search: {
-                    key: ''
-                },
                 addForm: {
                     dialog: false,
                     data: {}
@@ -138,8 +137,8 @@
             init() {
                 this.getListData(1);
             },
-            getListData(username) {
-                staffService.getList({username}).then(({data}) => {
+            getListData(page = this.listData.current_page) {
+                staffService.getList({page: page}).then(({data}) => {
                     this.listData = data.data;
                 });
             },
