@@ -37,8 +37,8 @@ export const getRoot = () => {
     if (window.CHANGE_ROOT) {
         ROOT = window.CHANGE_ROOT;
     } else if (process.env.NODE_ENV === 'development') {
-        ROOT = window.location.origin;
-        // ROOT = '//dev.demo.local';
+        // ROOT = window.location.origin;
+        ROOT = '//dev.base.local';
     } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ||
         window.location.hostname.indexOf('192.168.') > -1) {
         // 根据实际业务填写
@@ -57,8 +57,8 @@ export const rootPath = (conf = {}) => {
 
     if (process.env.NODE_ENV === 'development') {
         ROOT = (conf.root || getRoot()) + window.location.pathname;
-        CONTEXT_NAME = conf.context_name || 'api';
-        // CONTEXT_NAME = conf.context_name || 'demo';
+        // CONTEXT_NAME = conf.context_name || 'api';
+        CONTEXT_NAME = conf.context_name || 'demo';
     } else {
         ROOT = (conf.root || getRoot()) + '/';
         CONTEXT_NAME = conf.context_name || 'demo';

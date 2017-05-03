@@ -5,14 +5,14 @@ import Vue from 'vue';
 import ElementUI from 'element-ui';
 import VueResource from 'vue-resource';
 
+import 'element-ui/lib/theme-default/index.css';
+import './assets/css/style.scss';
+
 import router from 'router/index.js';
 import App from 'views/App.vue';
 
-import './assets/css/style.scss';
 import './filter/index.js';
 import store from 'stores/store.js';
-
-import 'element-ui/lib/theme-default/index.css';
 import {defaultUserFace} from 'config/config';
 
 import 'components/registerGlobalComponents';
@@ -32,7 +32,7 @@ new Vue({
     components: {App},
     router,
     store
-}).$mount('#vueApp');
+}).$mount('#app');
 
 Date.prototype.Format = function (fmt) {
     let o = {

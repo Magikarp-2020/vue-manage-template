@@ -9,7 +9,7 @@
             </el-form-item>
         </el-form>
 
-        <el-button @click="showEditDialog" size="small">编辑</el-button>
+        <el-button @click="showEditDialog({})" size="small">编辑</el-button>
         <el-table
                 :data="listData">
             <el-table-column
@@ -91,7 +91,7 @@
                 });
             },
             showEditDialog(item) {
-                this.param = item || {id: 1, val: '我是编造的参数值'};
+                this.param = item.id ? item : {id: 1, val: '我是编造的参数值'};
                 this.editDialog = true;
             },
             updateParam() {

@@ -4,7 +4,7 @@
                 v-if="crumbs.length > 1 && index!=crumbs.length-1 && crumbs[0].length">/</span></span>-->
         <div class="header-crumbs-left">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item v-for="(c,index) in crumbs">{{c}}</el-breadcrumb-item>
+                <el-breadcrumb-item v-for="c in crumbs" :key="c">{{c}}</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="header-crumbs-right">

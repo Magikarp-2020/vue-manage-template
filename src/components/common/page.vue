@@ -1,16 +1,17 @@
 <template>
-    <div class="mgt10">
+    <div>
+        <p class="pagination-info">第 <span class="text-primary">1{{data.current_page}}</span> 页 / 共 <span class="text-primary">{{data.totalPage}}</span> 页，每页 {{data.page_size}} 条，</p>
         <el-pagination
-                layout="prev, pager, next"
-                :total="parseInt(data.total) || 1"
-                :current-page="parseInt(data.current_page) || 1"
-                :page-size="parseInt(data.page_size) || 1"
-                @current-change="currentChange">
+            layout="total, prev, pager, next, jumper"
+            :total="parseInt(data.total) || 1"
+            :current-page="parseInt(data.current_page) || 1"
+            :page-size="parseInt(data.page_size) || 1"
+            @current-change="currentChange">
         </el-pagination>
     </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
     /**
      * props:
      *

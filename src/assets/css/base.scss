@@ -1,13 +1,13 @@
-button, input, select, textarea {
-}
+$primary: #20a0ff;
+
 
 /*text color*/
 .text-primary {
-  color: #ff5b62;
+  color: $primary;
 }
 
 .text-success {
-  color: #5ad473;
+  color: #5ad473 !important;
 }
 
 .text-blue, .text-blue:hover {
@@ -75,7 +75,10 @@ button, input, select, textarea {
 }
 
 .text-orange {
-  color: #F90;
+  color: #F90 !important;
+}
+.text-danger {
+  color: #ff4949 !important;
 }
 
 .text-right {

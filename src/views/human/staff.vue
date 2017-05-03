@@ -1,15 +1,14 @@
 <template>
     <div>
-        <option-space :more="true" item-label-width="80px" :model="demoForm">
+        <option-space :more="true" item-label-width="80px" :model="demoForm" @search="search" @searchHigh="searchHigh">
             <span slot="left">
-                <el-input type="text"></el-input>
-                <el-button type="primary">查询</el-button></span>
+                <el-input type="text" placeholder="搜索内容" class="mgr10"></el-input>
+            </span>
             <span slot="right">
-                <limit-btn limit="emp:role::c" type="success" icon="plus" size="" @click="addStaff">添加</limit-btn>
                 <limit-btn limit="emp:role::c" type="success" icon="plus" size="" @click="addStaff">添加</limit-btn>
             </span>
             <div slot="more">
-                <option-space-item label="姓名姓名" prop="name" :rules="[{required: true, message: '请填写姓名'}]">
+                <option-space-item label="姓名" prop="name" :rules="[{required: true, message: '请填写姓名'}]">
                     <el-input type="text" v-model="demoForm.name"></el-input>
                 </option-space-item>
             </div>
@@ -18,9 +17,28 @@
                 :data="listData"
                 style="width: 100%">
             <el-table-column
+                    prop="checked"
+                    label="#"
+                    width="50px">
+                <template scope="scope">
+                   <el-checkbox v-model="scope.row.checked" @change="updateParent(scope.row.checked)"></el-checkbox>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="work_no"
+                    label="工号">
+            </el-table-column>
+            <el-table-column
                     prop="real_name"
-                    label="姓名"
-                    width="180">
+                    label="姓名">
+            </el-table-column>
+            <el-table-column
+                    prop="mobile"
+                    label="手机号">
+            </el-table-column>
+            <el-table-column
+                    prop="dept"
+                    label="部门">
             </el-table-column>
             <el-table-column
                     label="创建时间">
@@ -29,29 +47,62 @@
                 </template>
             </el-table-column>
             <el-table-column
-                    prop="mobile"
-                    label="手机号">
-            </el-table-column>
-            <el-table-column
                     label="操作"
-                    align="right">
+                    width="270px">
                 <template scope="scope">
-                    <limit-btn limit="staff:r" size="small" @click="showDetail(scope.row)" type="text">详情/修改</limit-btn>
-                    <!--<limit-btn limit="staff:password" size="small">重置密码</limit-btn>-->
-                    <limit-btn v-if="scope.row.disabled" limit="staff:start" size="small"
-                               @click="staffDisabled(scope.row)" type="success">启用
-                    </limit-btn>
-                    <limit-btn v-else limit="staff:stop" @click="staffDisabled(scope.row)" size="small" type="text">
-                        禁用
-                    </limit-btn>
+                    <div class="opt-septal-line">
+                        <limit-btn limit="emp:role::u" type="text" @click="showDetail(scope.row)">详情</limit-btn>
+                        <limit-btn limit="emp:role::u" type="text" @click="editStaff(scope.row)">修改</limit-btn>
+                        <limit-btn v-if="scope.row.disabled" type="text" class="text-success" limit="staff::start" @click="staffDisabled(scope.row)">启用</limit-btn>
+                        <limit-btn v-else type="text" class="text-orange" limit="staff::stop" @click="staffDisabled(scope.row)">禁用</limit-btn>
+                        
+                        <el-dropdown>
+                            <span class="el-dropdown-link">
+                                更多<i class="el-icon-caret-bottom el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>
+                                    <limit-btn limit="emp:role::u" type="text" @click="resetPassword(scope.row.id)">重置密码</limit-btn>
+                                </el-dropdown-item>
+                                <el-dropdown-item>
+                                    <limit-btn limit="emp:role::d" type="text" class="text-danger" @click="deleteStaff(scope.row.id)">删除</limit-btn>
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
 
-        <!--<page :data="listData" @change="getListData"></page>-->
+        <table-footer :data="pageData" @change="getListData">
+            <template slot="left">
+                <el-checkbox v-model="checkedAll" @change="updateChildren(checkedAll)"></el-checkbox>
+                <limit-btn type="primary" size="small" limit="emp:role::u" :disabled="!checkedItem" @click="resetPassword">重置密码</limit-btn>
+                <limit-btn type="primary" size="small" limit="staff::start" :disabled="!checkedItem" @click="staffDisabled">启用</limit-btn>
+                <limit-btn type="primary" size="small" limit="staff::stop" :disabled="!checkedItem" @click="staffDisabled">禁用</limit-btn>
+                <limit-btn type="primary" size="small" limit="emp:role::d" :disabled="!checkedItem" @click="deleteStaff">删除</limit-btn>
+                
+                <el-dropdown>
+                    <el-button size="small" :disabled="!checkedItem">
+                        更多<i class="el-icon-caret-bottom el-icon--right"></i>
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>
+                            <limit-btn limit="emp:role::u" type="text">操作一</limit-btn>
+                        </el-dropdown-item>
+                        <el-dropdown-item>
+                            <limit-btn limit="emp:role::d" type="text" class="text-danger">操作二</limit-btn>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </template>
+        </table-footer>
+
 
         <el-dialog title="详情" v-model="staffDialog" size="small" @close="staffStatus = 1">
-
+            <!-- staffStatus: 1   详情 
+                 staffStatus: 2   修改资料
+            -->
             <div class="detail" v-if="staffStatus == 1">
                 <el-form label-width="120px">
                     <img class="user-face" :src="staffDialogData.face" alt="用户头像">
@@ -76,42 +127,41 @@
                 <staff-form :value="staffDialogData" ref="staffDialogForm" :role-list="roleList"></staff-form>
             </div>
 
-            <p class="info">默认密码: <span>123456</span></p>
+            <p class="info">默认密码  <span>123456</span></p>
 
             <div slot="footer" class="dialog-footer">
-                <el-button @click="resetPassword" v-if="staffStatus == 1">重置密码</el-button>
-                <el-button v-if="staffStatus == 1" @click="staffStatus = 2">修改资料</el-button>
-                <el-button v-if="staffStatus == 2" @click="staffChangeSubmit(false)" type="success">确认修改
-                </el-button>
-                <el-button v-if="staffStatus == 2" @click="staffChangeSubmit(true)" type="warning">取消修改</el-button>
-                <el-button @click="deleteStaff" v-if="staffStatus == 1" type="danger">删除员工</el-button>
-                <el-button type="primary" @click="staffDialog = false">关 闭</el-button>
+                <el-button v-if="staffStatus == 2" @click="staffChangeSubmit(true)">取消</el-button>
+                <el-button v-if="staffStatus == 2" @click="staffChangeSubmit(false)" type="primary">确认</el-button>
             </div>
         </el-dialog>
 
         <el-dialog title="添加员工" v-model="addForm.dialog" size="small" @close="addCancel">
             <staff-form :value="addForm.data" ref="staffAddForm" :role-list="roleList"></staff-form>
 
-            <p class="info">默认密码: <span>123456</span></p>
+            <p class="info">默认密码  <span>123456</span></p>
             <div slot="footer" class="dialog-footer">
-                <el-button type="default" @click="addSuccess">确 定</el-button>
-                <el-button type="primary" @click="addForm.dialog = false">关 闭</el-button>
+                <el-button type="default" @click="addForm.dialog = false">关 闭</el-button>
+                <el-button type="primary" @click="addSuccess">确 定</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
     import staffService from 'services/staffService';
     import roleService from 'services/roleService';
     import util from 'utils/util';
-    import staffForm from 'components/human/staff/form';
 
     export default {
         data() {
             return {
+                filter: {
+                    pageSize: 20,  // 搜索条件，包含input、select、page分页等信息
+                    currPage: 1
+                },
                 staffDialogData: {},
                 listData: [],
+                pageData: {},
                 staffDialog: false,
                 staffStatus: 1,
                 addForm: {
@@ -121,7 +171,8 @@
                 demoForm: {
                     name: ''
                 },
-                roleList: []
+                roleList: [],
+                checkedAll: false
             };
         },
         created() {
@@ -133,18 +184,42 @@
                 {text: '添加', click: this.addStaff, type: 'success', icon: 'plus'}
             ]);*/
         },
+        computed: {
+            checkedItem() {
+                let bool = this.listData.some((item) => {
+                    return item.checked === true;
+                });
+                return bool;
+            }
+        },
         methods: {
             init() {
-                this.getListData(1);
+                this.getListData({});
             },
-            getListData(page = this.listData.current_page) {
-                staffService.getList({page: page}).then(({data}) => {
+            search() {
+                this.$message.info('触发查询');
+            },
+            searchHigh() {
+                this.$message.info('触发高级查询');
+            },
+            getListData(param) {
+                this.filter = Object.assign({}, this.filter, param); // param: 在当前filter的基础上增加/更新的 筛选条件 -> json
+                console.log(this.filter);
+                staffService.getList(this.filter).then(({data}) => {
+                    this.pageData = data.pageInfo;
                     this.listData = data.data;
+                    this.listData.forEach((item) => {
+                        this.$set(item, 'checked', false);    // 增加checked字段，用于选中
+                    });
                 });
             },
             showDetail(item) {
                 this.staffDialogData = util.cloneObject(item);
                 this.staffDialog = true;
+            },
+            editStaff(item) {
+                this.showDetail(item);
+                this.staffStatus = 2;   // 修改资料
             },
             staffChangeSubmit(cancel) {
                 if (!cancel) {
@@ -164,9 +239,9 @@
                     this.staffStatus = 1;
                 }
             },
-            resetPassword() {
+            resetPassword(id) {
                 this.$confirm('是否确认重置此员工密码？').then(() => {
-                    this.resetPasswordAjax({id: this.staffDialogData.id});
+                    this.resetPasswordAjax({id: id});
                 });
                 /* this.$prompt('请输入新密码', '提示', {
                  confirmButtonText: '确定',
@@ -187,7 +262,6 @@
             },
             resetPasswordAjax(data) {
                 staffService.resetPassword(data).then(({data}) => {
-                    console.log(data);
                     this.$message.success('重置成功');
                 }, () => {
                     this.$message.error('重置失败');
@@ -201,25 +275,24 @@
                     item.disabled = item.disabled ? 0 : 1;
                 });
             },
-            deleteStaff() {
+            deleteStaff(id) {
+                console.log(123123);
                 this.$confirm('是否确认删除此员工？删除后不可恢复').then(() => {
                     staffService.deleteStaff({
-                        id: this.staffDialogData.id
+                        id: id
                     }).then(({data}) => {
                         this.$message.success('删除成功');
-                        this.staffDialog = false;
                         this.getListData();
                     }, () => {
                         this.$message.error('删除失败');
                     });
-                });
+                }, () => {});
             },
             addStaff() {
                 this.addForm.dialog = true;
             },
             addSuccess() {
                 this.$refs['staffAddForm'].validate((valid, data) => {
-                    console.log(valid, data);
                     if (valid) {
                         staffService.addStaff(data).then(({data}) => {
                             this.$message.success('添加成功');
@@ -231,10 +304,24 @@
             },
             addCancel() {
                 this.$refs['staffAddForm'].resetFields();
+            },
+            updateParent(checked) {
+                if (!checked) {
+                    this.checkedAll = false;
+                } else {
+                    let allCheck = this.listData.every((item) => {
+                        return item.checked === true;
+                    });
+                    this.checkedAll = allCheck;
+                };
+            },
+            updateChildren(checked) {
+                this.listData.forEach((item) => {
+                    item.checked = checked;
+                });
             }
         },
         components: {
-            staffForm
         }
     };
 
@@ -262,5 +349,9 @@
             padding-left: 5px;
             color: #324057;
         }
+    }
+
+    .vm {
+        vertical-align: middle;
     }
 </style>

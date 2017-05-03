@@ -1,10 +1,10 @@
 <template>
-    <el-button :type="type" :size="size" :icon="icon" :disabled="limitNoAccess" @click="handleClick">
+    <el-button :type="type" :size="size" :icon="icon" :disabled="limitNoAccess" @click="handleClick" class="vm">
         <slot></slot>
     </el-button>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
     /**
      * 权限按钮：
      * 基于element-ui button 组件二次封装
@@ -50,6 +50,10 @@
                 type: String,
                 default: '',
                 required: true
+            },
+            disabled: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -89,6 +93,11 @@
              * @return {boolean}
              */
             limitNoAccess() {
+                // 如果本身传了disabled属性，先判断这个
+                if (this.disabled) {
+                    return true;
+                }
+
                 // 当 limitList 为 * 时开通所有权限
                 if (this.limitList === '*') {
                     return false;
@@ -97,7 +106,7 @@
                 let limit = this.limitList[this.btnLimit.key];
                 if (limit) {
                     // 对应权限为 * 开通当前功能的所有权限
-                    if (limit === '*') {
+                    if (limit[0] === '*') {
                         return false;
                     }
                     let arrLimit = true;
@@ -114,7 +123,10 @@
         },
         methods: {
             handleClick() {
-                this.$emit('click');
+                if (!this.limitNoAccess) {
+                    console.log('emit click');
+                    this.$emit('click');
+                }
             }
         }
     };
@@ -122,5 +134,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-
+    .vm {
+        vertical-align: middle;
+    }
 </style>

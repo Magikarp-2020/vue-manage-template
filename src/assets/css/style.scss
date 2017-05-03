@@ -1,6 +1,7 @@
 @import "reset";
 @import "base";
 @import "theme";
+@import "element-ui-extend";
 // @import url(../../../static/font/iconfont.css);
 
 // 引入组件的css
@@ -106,10 +107,55 @@ body {
   display: block;
 }
 
-.el-icon-search:hover {
-  cursor: pointer;
-}
-
 .search-box {
   margin-bottom: 15px;
+}
+
+.table-footer {
+    border: 1px solid #dfe6ec;
+    border-top: 0px;
+    background: #fff;
+    padding: 12px 18px;
+    line-height: 28px;
+    overflow: hidden;
+
+    .footer-left {
+        float: left;
+        font-size: 0;
+        .el-checkbox {
+            margin-right: 15px;
+        }
+
+        .el-dropdown {
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        * {
+            // font-size: 12px;
+        }
+    }
+
+    .footer-right {
+        float: right;
+        font-size: 0;
+
+        .el-pagination {
+            padding: 0;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 13px;
+
+            .el-pagination__total {
+                margin-left: 0;
+            }
+        }
+
+        .pagination-info {
+            font-size: 13px;
+            color: #475669;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
 }

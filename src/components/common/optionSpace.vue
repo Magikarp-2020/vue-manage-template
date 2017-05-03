@@ -1,27 +1,36 @@
 <template>
     <div class="option-space clearfix">
-        <div class="clearfix">
-            <div class="option-space--left">
-                <slot name="left"></slot>
-                <el-button @click="handlerMore" v-if="more">高级查询</el-button>
-            </div>
-            <div class="option-space--right">
-                <slot name="right"></slot>
-            </div>
-        </div>
-        <div class="option-space--more" :class="{'option-space--more-active': showMore}" v-if="more">
+        <div class="option-space--more" :class="{'option-space--more-active': showMore}" v-show="more">
             <div class="option-space--more-wrapper">
-                <el-form :label-width="itemLabelWidth" :model="model">
+                <el-form :label-width="itemLabelWidth" :model="model" ref="searchHighForm">
                     <el-row :gutter="itemLabelGutter">
                         <slot name="more"></slot>
                     </el-row>
                 </el-form>
             </div>
         </div>
+        <div class="clearfix">
+            <div class="option-space--left">
+                <div v-show="!showMore">
+                    <slot name="left"></slot>
+                    <el-button type="primary" @click="search">查询</el-button>
+                </div>
+                <div v-if="more" v-show="showMore">
+                    <el-button @click="searchHigh('searchHighForm')" type="primary">高级查询</el-button>
+                    <el-button @click="clear('searchHighForm')" type="primary">清空</el-button>
+                </div>
+            </div>
+            <div class="option-space--right">
+                <el-button @click="handlerMore" v-if="more" type="text">{{moreBtnText}}</el-button>
+                <span class="mgl10">
+                    <slot name="right"></slot>
+                </span>
+            </div>
+        </div>
     </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
     import $ from 'assets/jquery-vendor';
     export default {
         name: 'optionSpace',
@@ -50,6 +59,11 @@
                 showMore: false
             };
         },
+        computed: {
+            moreBtnText() {
+                return this.showMore ? '关闭高级查询' : '高级查询';
+            }
+        },
         methods: {
             handlerMore() {
                 this.showMore = !this.showMore;
@@ -63,6 +77,21 @@
                     el.find('.option-space--more').animate({height: 0}, function () {
                     });
                 }
+            },
+            search() {
+                this.$emit('search');   // 普通查询
+            },
+            searchHigh(formName) {
+                this.$refs[formName].validate((valid) => {
+                  if (valid) {
+                    this.$emit('searchHigh');   // 高级查询
+                  } else {
+                    return false;
+                  }
+                });
+            },
+            clear(formName) {
+                this.$refs[formName].resetFields();
             }
         }
     };
@@ -70,13 +99,4 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-    .option-space {
-        padding: 0 10px 10px;
-        &--left {
-            float: left;
-        }
-        &--right {
-            float: right;
-        }
-    }
 </style>

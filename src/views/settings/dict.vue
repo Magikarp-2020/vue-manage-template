@@ -2,11 +2,12 @@
     <div>
         <div class="search-box">
             <el-select v-model="search.parent" filterable placeholder="请选择" class="mgr10">
+                <!--{{parentList}}-->
                 <el-option
-                  v-for="item in parentList"
-                  :label="item.text"
-                  :value="item.key">
-                </el-option>
+                    v-for="item in parentList"
+                    :key="item.key"
+                    :label="item.text"
+                    :value="item.key"/>
             </el-select>
             <!-- <el-input
                   style="width: 220px"
@@ -51,10 +52,11 @@
                     </div> -->
                     <!-- <el-button @click="disable(scope.row)" size="small">禁用</el-button> -->
                     <el-switch
-                        v-model="scope.row.stoped"
-                        on-color="#13ce66"
-                        off-color="#ff4949"
-                        @change="disable(scope.row)">
+                        v-model="scope.row.stoped" 
+                        on-text=""
+                        off-text=""
+                        @change="disable(scope.row)"
+                        @click.stop>
                     </el-switch>
                 </template>
             </el-table-column>
@@ -119,7 +121,11 @@
                     pkey: this.search.parent
                 };
                 systemService.getDictList(data).then(({data}) => {
-                    this.childList = data.data;
+                    let arr = data.data;
+                    arr.forEach((item) => {
+                        item.stoped = Boolean(item.stoped);
+                    });
+                    this.childList = arr;
                 });
             },
             edit(item) {
@@ -145,13 +151,14 @@
                 });
             },
             disable(item) {
-                // item.stoped = !item.stoped;
-                // console.log(item);
+                // 这时已经切换了on-off
                 systemService.disableDictItem({
                     key: item.key,
                     stoped: Number(item.stoped)
                 }).then(({data}) => {
-                    item.stoped = !item.stoped;
+                    // item.stoped = !item.stoped;
+                }, ({data}) => {
+                    item.stoped = !item.stoped;   // 人为还原回去
                 });
             }
         }

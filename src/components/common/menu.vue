@@ -1,8 +1,8 @@
 <template>
     <el-menu :default-active="getRouterLink" class="menu-self" :router="true" theme="dark">
-        <el-submenu v-for="(map,index) in routerMap" v-if="map.children && !map.hide && map.jurisdiction" :index="index+''">
+        <el-submenu v-for="(map,index) in routerMap" :key="map.path" v-if="map.children && !map.hide && map.jurisdiction" :index="index+''">
             <template slot="title"><i :class="map.icon"></i>{{map.text}}</template>
-            <el-menu-item :index="'/main/'+map.path+'/'+child.path" v-for="(child, childIndex) in map.children" v-if="!child.hide && child.jurisdiction">
+            <el-menu-item :index="'/main/'+map.path+'/'+child.path" v-for="(child, childIndex) in map.children" :key="map.path+'/'+child.path" v-if="!child.hide && child.jurisdiction">
                 {{child.text}}
             </el-menu-item>
         </el-submenu>

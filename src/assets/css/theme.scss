@@ -6,6 +6,8 @@ html {
 $header-height: 50px;
 $aside-width: 175px;
 $breadcrumb-height: 36px;
+$primary: #20a0ff;
+
 
 header.header {
   padding-left: 20px;
@@ -132,7 +134,7 @@ aside.aside {
   left: $aside-width;
   right: 0;
   bottom: 0;*/
-  padding: $header-height 0 0 $aside-width;
+  padding: $header-height+15 15px 0 $aside-width+15;
   transition: all 0.4s;
   .breadcrumb {
     min-height: $breadcrumb-height;
@@ -140,7 +142,7 @@ aside.aside {
     background: #ffffff !important;
     padding-left: 8px;
     color: #1F2D3D;
-    border-bottom: 2px solid #d8d8d8;
+    border-left: 3px solid $primary;
 
     .header-crumbs {
       //flex: 1;
@@ -163,7 +165,7 @@ aside.aside {
 
   }
   #contentMain {
-    padding: 10px;
+    margin-top: 15px;
   }
 }
 
@@ -233,4 +235,28 @@ aside.aside {
     padding-left: 20px;
     transition: all 0.4s;
   }
+}
+
+
+// 动画主题
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
+ 
+ // 针对 ‘高级查询’ 按钮
+.slide-fade-high-enter-active, .slide-fade-high-leave-active {
+  overflow: hidden;
+  width: 88px;    
+  transition: all .5s ease;
+}
+.slide-fade-high-enter, .slide-fade-high-leave-to
+/* .slide-fade-leave-active for <2.1.8 */ {
+  width: 0;
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 0;
+  opacity: 0;
 }

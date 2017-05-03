@@ -12,7 +12,7 @@
                 <form class="login-form" @submit.prevent="login">
                     {{login.username}}
                     <input v-model="loginUsername" type="text" placeholder="用户名： root"/>
-                    <input v-model="loginPassword" type="password" placeholder="密码: 12345678"/>
+                    <input v-model="loginPassword" type="password" placeholder="密码: 123456"/>
                     <div class="captcha clearfix" v-if="needCaptcha">
                         <input v-model="loginCaptcha" type="text" placeholder="右侧验证码"/>
                         <div class="captcha-img-box">
